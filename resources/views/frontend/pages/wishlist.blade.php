@@ -50,7 +50,8 @@
                                             <p class="product-des">{!! $wishlist['summary'] !!}</p>
                                         </td>
                                         <td class="total-amount" data-title="Total">
-                                            <span>{{ Helper::rupiahFormatter($wishlist['amount']) }}</span></td>
+                                            <span>{{ Helper::rupiahFormatter($wishlist['amount']) }}</span>
+                                        </td>
                                         <td><a href="{{ route('add-to-cart', $wishlist->product['slug']) }}"
                                                 class='btn text-white'>Add To Cart</a></td>
                                         <td class="action" data-title="Remove"><a
@@ -213,7 +214,7 @@
                                             </button>
                                         </div>
                                         <input type="text" name="quant[1]" class="input-number" data-min="1"
-                                            data-max="1000" value="1">
+                                            data-max="1000" value="{{ Auth::user()->role == 'agent' ? 10 : 1 }}">
                                         <div class="button plus">
                                             <button type="button" class="btn btn-primary btn-number" data-type="plus"
                                                 data-field="quant[1]">
