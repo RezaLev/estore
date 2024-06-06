@@ -535,7 +535,7 @@
                                                     <input type="hidden" name="slug" value="{{ $product->slug }}">
                                                     <input type="text" name="quant[1]" class="input-number"
                                                         data-min="1" data-max="1000"
-                                                        value="{{ Auth::user()->role == 'agent' ? 10 : 1 }}">
+                                                        value="{{ Auth::check() && Auth::user()->role == 'agent' ? 10 : 1 }}">
                                                     <div class="button plus">
                                                         <button type="button" class="btn btn-primary btn-number"
                                                             data-type="plus" data-field="quant[1]">
@@ -617,7 +617,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script>
         /*==================================================================
-                            [ Isotope ]*/
+                                [ Isotope ]*/
         var $topeContainer = $('.isotope-grid');
         var $filter = $('.filter-tope-group');
 

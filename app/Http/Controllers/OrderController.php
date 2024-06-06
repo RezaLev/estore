@@ -243,23 +243,26 @@ class OrderController extends Controller
         if ($order) {
             if ($order->status == "new") {
                 request()->session()->flash('success', 'Your order has been placed. please wait.');
-                return redirect()->route('home');
             } elseif ($order->status == "process") {
                 request()->session()->flash('success', 'Your order is under processing please wait.');
-                return redirect()->route('home');
             } elseif ($order->status == "delivered") {
                 request()->session()->flash('success', 'Your order is successfully delivered.');
-                return redirect()->route('home');
-            } else {
+            } elseif ($order->status == "cancel") {
                 request()->session()->flash('error', 'Your order canceled. please try again');
-                return redirect()->route('home');
+            } elseif ($order->status == "return_request") {
+                request()->session()->flash('success', 'Your order return is requested.');
+            } elseif ($order->status == "return_accepted") {
+                request()->session()->flash('success', 'Your order return request is accepted.');
+            } elseif ($order->status == "return_rejected") {
+                request()->session()->flash('success', 'Your order return request is rejected.');
             }
+            return redirect()->route('home');
         } else {
             request()->session()->flash('error', 'Invalid order numer please try again');
             return back();
         }
     }
-    
+
     public function orderReturn()
     {
         return view('frontend.pages.order-return');
@@ -272,17 +275,21 @@ class OrderController extends Controller
         if ($order) {
             if ($order->status == "new") {
                 request()->session()->flash('success', 'Your order has been placed. please wait.');
-                return redirect()->route('home');
             } elseif ($order->status == "process") {
                 request()->session()->flash('success', 'Your order is under processing please wait.');
-                return redirect()->route('home');
             } elseif ($order->status == "delivered") {
-                request()->session()->flash('success', 'Your order is successfully delivered.');
-                return redirect()->route('home');
-            } else {
+                $order->fill(['status' => 'return_request'])->save();
+                request()->session()->flash('success', 'Your order return request is successfully delivered.');
+            } elseif ($order->status == "cancel") {
                 request()->session()->flash('error', 'Your order canceled. please try again');
-                return redirect()->route('home');
+            } elseif ($order->status == "return_request") {
+                request()->session()->flash('success', 'Your order return is requested.');
+            } elseif ($order->status == "return_accepted") {
+                request()->session()->flash('success', 'Your order return request is accepted.');
+            } elseif ($order->status == "return_rejected") {
+                request()->session()->flash('success', 'Your order return request is rejected.');
             }
+            return redirect()->route('home');
         } else {
             request()->session()->flash('error', 'Invalid order numer please try again');
             return back();

@@ -136,7 +136,8 @@
                                                 </div>
                                                 <input type="hidden" name="slug" value="{{ $product_detail->slug }}">
                                                 <input type="text" name="quant[1]" class="input-number" data-min="1"
-                                                    data-max="1000" value="{{ Auth::user()->role == 'agent' ? 10 : 1 }}"
+                                                    data-max="1000"
+                                                    value="{{ Auth::check() && Auth::user()->role == 'agent' ? 10 : 1 }}"
                                                     id="quantity">
                                                 <div class="button plus">
                                                     <button type="button" class="btn btn-primary btn-number"

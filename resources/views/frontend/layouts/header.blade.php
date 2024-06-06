@@ -37,7 +37,7 @@
                                     <li><i class="ti-user"></i> <a href="{{ route('admin') }}" target="_blank">Dashboard</a>
                                     </li>
                                 @else
-                                    @if (Auth::user()->role == 'agent')
+                                    @if (Auth::check() && Auth::user()->role == 'agent')
                                         <li><i class=" ti-reload"></i> <a href="{{ route('order.return') }}">Return
                                                 Order</a>
                                         </li>

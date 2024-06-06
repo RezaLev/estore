@@ -131,7 +131,7 @@
 <script src="{{ asset('frontend/js/finalcountdown.min.js') }}"></script>
 <!-- Nice Select JS -->
 <script>
-    var quantityModifier = {{ Auth::user()->role == 'agent' ? 10 : 1 }}
+    var quantityModifier = {{ Auth::check() && Auth::user()->role == 'agent' ? 10 : 1 }}
 </script>
 <script src="{{ asset('frontend/js/nicesellect.js') }}"></script>
 <!-- Flex Slider JS -->
