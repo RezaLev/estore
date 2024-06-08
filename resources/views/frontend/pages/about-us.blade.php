@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 
-@section('title','E-SHOP || About Us')
+@section('title','GriyaBambu || About Us')
 
 @section('main-content')
 
@@ -30,7 +30,7 @@
 							@php
 								$settings=DB::table('settings')->get();
 							@endphp
-							<h3>Welcome To <span>Eshop</span></h3>
+							<h3>Welcome To <span>GriyaBambu</span></h3>
 							<p>@foreach($settings as $data) {{$data->description}} @endforeach</p>
 							<div class="button">
 								<a href="{{route('blog')}}" class="btn">Our Blog</a>
@@ -60,7 +60,7 @@
 					<!-- Start Single Service -->
 					<div class="single-service">
 						<i class="ti-rocket"></i>
-						<h4>Free shiping</h4>
+						<h4>Free shipping</h4>
 						<p>Orders over $100</p>
 					</div>
 					<!-- End Single Service -->
@@ -78,7 +78,7 @@
 					<!-- Start Single Service -->
 					<div class="single-service">
 						<i class="ti-lock"></i>
-						<h4>Sucure Payment</h4>
+						<h4>Secure Payment</h4>
 						<p>100% secure payment</p>
 					</div>
 					<!-- End Single Service -->
@@ -87,7 +87,7 @@
 					<!-- Start Single Service -->
 					<div class="single-service">
 						<i class="ti-tag"></i>
-						<h4>Best Peice</h4>
+						<h4>Best Price</h4>
 						<p>Guaranteed price</p>
 					</div>
 					<!-- End Single Service -->

@@ -28,7 +28,7 @@
               <th>Action</th>
             </tr>
           </thead>
-          <tfoot>
+          <!-- <tfoot>
             <tr>
               <th>S.N.</th>
               <th>Title</th>
@@ -39,7 +39,7 @@
               <th>Status</th>
               <th>Action</th>
             </tr>
-          </tfoot>
+          </tfoot> -->
           <tbody>
            
             @foreach($posts as $post)   
@@ -52,7 +52,7 @@
                 <tr>
                     <td>{{$post->id}}</td>
                     <td>{{$post->title}}</td>
-                    <td>{{$post->cat_info->title}}</td>
+                    <td>{{$post->cat_info}}</td>
                     <td>{{$post->tags}}</td>
 
                     <td>

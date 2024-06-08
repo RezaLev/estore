@@ -18,7 +18,7 @@
         <table class="table table-bordered" id="banner-dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-              <th>S.N.</th>
+              <th>No</th>
               <th>Title</th>
               <th>Slug</th>
               <th>Is Parent</th>
@@ -28,7 +28,7 @@
               <th>Action</th>
             </tr>
           </thead>
-          <tfoot>
+          <!-- <tfoot>
             <tr>
               <th>S.N.</th>
               <th>Title</th>
@@ -39,7 +39,7 @@
               <th>Status</th>
               <th>Action</th>
             </tr>
-          </tfoot>
+          </tfoot> -->
           <tbody>
 
             @foreach($categories as $category)

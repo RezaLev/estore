@@ -18,7 +18,7 @@
         <table class="table table-bordered" id="product-dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-              <th>S.N.</th>
+              <th>No</th>
               <th>Title</th>
               <th>Category</th>
               <th>Is Featured</th>
@@ -33,7 +33,7 @@
               <th>Action</th>
             </tr>
           </thead>
-          <tfoot>
+          <!-- <tfoot>
             <tr>
               <th>S.N.</th>
               <th>Title</th>
@@ -49,7 +49,7 @@
               <th>Status</th>
               <th>Action</th>
             </tr>
-          </tfoot>
+          </tfoot> -->
           <tbody>
 
             @foreach($products as $product)
@@ -61,17 +61,15 @@
                 <tr>
                     <td>{{$product->id}}</td>
                     <td>{{$product->title}}</td>
-                    <td>{{$product->cat_info['title']}}
-                      <sub>
-                          {{$product->sub_cat_info->title ?? ''}}
-                      </sub>
+                    <td>{{$product->title}}
+                      
                     </td>
                     <td>{{(($product->is_featured==1)? 'Yes': 'No')}}</td>
                     <td>Rs. {{$product->price}} /-</td>
                     <td>  {{$product->discount}}% OFF</td>
                     <td>{{$product->size}}</td>
                     <td>{{$product->condition}}</td>
-                    <td> {{ucfirst($product->brand->title)}}</td>
+                    <td> {{ucfirst($product->brand)}}</td>
                     <td>
                       @if($product->stock>0)
                       <span class="badge badge-primary">{{$product->stock}}</span>

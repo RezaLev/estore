@@ -1,5 +1,5 @@
 @extends('frontend.layouts.master')
-@section('title', 'E-SHOP || HOME PAGE')
+@section('title', 'GriyaBambu || HOME PAGE')
 @section('main-content')
     <!-- Slider Area -->
     @if (count($banners) > 0)
@@ -185,31 +185,7 @@
     $featured=DB::table('products')->where('is_featured',1)->where('status','active')->orderBy('id','DESC')->limit(1)->get();
 @endphp --}}
     <!-- Start Midium Banner  -->
-    <section class="midium-banner">
-        <div class="container">
-            <div class="row">
-                @if ($featured)
-                    @foreach ($featured as $data)
-                        <!-- Single Banner  -->
-                        <div class="col-lg-6 col-md-6 col-12">
-                            <div class="single-banner">
-                                @php
-                                    $photo = explode(',', $data->photo);
-                                @endphp
-                                <img src="{{ $photo[0] }}" alt="{{ $photo[0] }}">
-                                <div class="content">
-                                    <p>{{ $data->cat_info['title'] }}</p>
-                                    <h3>{{ $data->title }} <br>Up to<span> {{ $data->discount }}%</span></h3>
-                                    <a href="{{ route('product-detail', $data->slug) }}">Shop Now</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /End Single Banner  -->
-                    @endforeach
-                @endif
-            </div>
-        </div>
-    </section>
+    
     <!-- End Midium Banner -->
 
     <!-- Start Most Popular -->
@@ -377,7 +353,7 @@
                     <!-- Start Single Service -->
                     <div class="single-service">
                         <i class="ti-rocket"></i>
-                        <h4>Free shiping</h4>
+                        <h4>Free shipping</h4>
                         <p>Orders over $100</p>
                     </div>
                     <!-- End Single Service -->
@@ -386,8 +362,8 @@
                     <!-- Start Single Service -->
                     <div class="single-service">
                         <i class="ti-reload"></i>
-                        <h4>Free Return</h4>
-                        <p>Within 30 days returns</p>
+                        <h4>Get a coupom</h4>
+                        <p>Within more checkout</p>
                     </div>
                     <!-- End Single Service -->
                 </div>
@@ -395,7 +371,7 @@
                     <!-- Start Single Service -->
                     <div class="single-service">
                         <i class="ti-lock"></i>
-                        <h4>Sucure Payment</h4>
+                        <h4>Secure Payment</h4>
                         <p>100% secure payment</p>
                     </div>
                     <!-- End Single Service -->
@@ -404,7 +380,7 @@
                     <!-- Start Single Service -->
                     <div class="single-service">
                         <i class="ti-tag"></i>
-                        <h4>Best Peice</h4>
+                        <h4>Best Price</h4>
                         <p>Guaranteed price</p>
                     </div>
                     <!-- End Single Service -->

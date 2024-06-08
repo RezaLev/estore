@@ -13,7 +13,7 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>S.N.</th>
+                            <th>No</th>
                             <th>Order No.</th>
                             <th>Name</th>
                             <th>Email</th>
@@ -89,11 +89,11 @@
                                                     ->pluck('price');
                                             @endphp
                                             <td>Shipping Charge</td>
-                                            <td>{{ Helper::rupiahFormatter($order->courier_charge) }}</td>
+                                            <td> : {{ Helper::rupiahFormatter($order->courier_charge) }}</td>
                                         </tr>
                                         <tr>
                                             <td>Total Amount</td>
-                                            <td> : $ {{ number_format($order->total_amount, 2) }}</td>
+                                            <td> : Rp {{ number_format($order->total_amount, 2) }}</td>
                                         </tr>
                                         <tr>
                                             <td>Payment Method</td>

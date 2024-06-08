@@ -1,5 +1,5 @@
 @extends('user.layouts.master')
-@section('title','E-SHOP || Comment Page')
+@section('title','GriyaBambu || Comment Page')
 @section('main-content')
  <!-- DataTales Example -->
  <div class="card shadow mb-4">
@@ -66,7 +66,7 @@
         </table>
         <span style="float:right">{{$comments->links()}}</span>
         @else
-          <h6 class="text-center">No post comments found!!!</h6>
+          <h6 class="text-center">No post comments found</h6>
         @endif
       </div>
     </div>

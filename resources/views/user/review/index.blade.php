@@ -27,7 +27,7 @@
               <th>Action</th>
             </tr>
           </thead>
-          <tfoot>
+          <!-- <tfoot>
             <tr>
               <th>S.N.</th>
               <th>Review By</th>
@@ -38,7 +38,7 @@
               <th>Status</th>
               <th>Action</th>
               </tr>
-          </tfoot>
+          </tfoot> -->
           <tbody>
             @foreach($reviews as $review)
                 <tr>
