@@ -27,7 +27,7 @@
 
                         <option value="return_request"
                             {{ $order->status == 'new' || $order->status == 'process' || $order->status == 'cancel' || $order->status == 'cancel' || $order->status == 'return_rejected' ? 'disabled' : '' }}
-                            {{ $order->status == 'return_request' ? 'selected' : '' }}>Return Accepted</option>
+                            {{ $order->status == 'return_request' ? 'selected' : '' }}>Return Requested</option>
                         <option value="return_accepted"
                             {{ $order->status == 'new' || $order->status == 'process' || $order->status == 'cancel' || $order->status == 'cancel' || $order->status == 'return_rejected' ? 'disabled' : '' }}
                             {{ $order->status == 'return_accepted' ? 'selected' : '' }}>Return Accepted</option>

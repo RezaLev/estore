@@ -97,8 +97,8 @@ class OrderController extends Controller
         $order_data['order_number'] = 'ORD-' . strtoupper(Str::random(10));
         $order_data['user_id'] = $request->user()->id;
         $order_data['courier_name'] = explode('_', $request->shipping)[0];
-        // $order_data['courier_charge'] = explode('_', $request->shipping)[1];
-        // $shipping = $order_data['courier_charge'];
+        $order_data['courier_charge'] = explode('_', $request->shipping)[1];
+        $shipping = $order_data['courier_charge'];
         // return session('coupon')['value'];
         $order_data['sub_total'] = Helper::totalCartPrice();
         $order_data['quantity'] = Helper::cartCount();
@@ -187,8 +187,9 @@ class OrderController extends Controller
     {
         $order = Order::find($id);
         $this->validate($request, [
-            'status' => 'required|in:new,process,delivered,cancel'
+            'status' => 'required|in:new,process,delivered,cancel,return_request,return_accepted,return_rejected'
         ]);
+        
         $data = $request->all();
         // return $request->status;
         if ($request->status == 'delivered') {

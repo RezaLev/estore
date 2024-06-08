@@ -626,7 +626,7 @@
                                         </li>
                                         <li class="shipping">
                                             Shipping Cost
-                                            @if (count(Helper::shipping()) > 0 && Helper::cartCount() > 0)
+                                            @if (Helper::cartCount() > 0)
                                                 <select name="shipping" class="nice-select">
                                                     <option value="">Select your address</option>
                                                 </select>
