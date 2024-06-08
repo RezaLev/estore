@@ -136,7 +136,9 @@
                                                 </div>
                                                 <input type="hidden" name="slug" value="{{ $product_detail->slug }}">
                                                 <input type="text" name="quant[1]" class="input-number" data-min="1"
-                                                    data-max="1000" value="1" id="quantity">
+                                                    data-max="1000"
+                                                    value="{{ Auth::check() && Auth::user()->role == 'agent' ? 10 : 1 }}"
+                                                    id="quantity">
                                                 <div class="button plus">
                                                     <button type="button" class="btn btn-primary btn-number"
                                                         data-type="plus" data-field="quant[1]">
@@ -303,7 +305,8 @@
 																			}
 																		@endphp --}}
                                                             <h4>{{ ceil($product_detail->getReview->avg('rate')) }}
-                                                                <span>(Overall)</span></h4>
+                                                                <span>(Overall)</span>
+                                                            </h4>
                                                             <span>Based on {{ $product_detail->getReview->count() }}
                                                                 Comments</span>
                                                         </div>

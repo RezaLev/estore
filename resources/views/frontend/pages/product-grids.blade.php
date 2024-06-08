@@ -385,7 +385,8 @@
                                                     </div>
                                                     <input type="hidden" name="slug" value="{{ $product->slug }}">
                                                     <input type="text" name="quant[1]" class="input-number"
-                                                        data-min="1" data-max="1000" value="1">
+                                                        data-min="1" data-max="1000"
+                                                        value="{{ Auth::check() && Auth::user()->role == 'agent' ? 10 : 1 }}">
                                                     <div class="button plus">
                                                         <button type="button" class="btn btn-primary btn-number"
                                                             data-type="plus" data-field="quant[1]">

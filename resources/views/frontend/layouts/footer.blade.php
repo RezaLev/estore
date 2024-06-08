@@ -107,6 +107,9 @@
 	<!-- Countdown JS -->
 	<script src="{{asset('frontend/js/finalcountdown.min.js')}}"></script>
 	<!-- Nice Select JS -->
+    <script>
+        var quantityModifier = {{ Auth::check() && Auth::user()->role == 'agent' ? 10 : 1 }}
+    </script>
 	<script src="{{asset('frontend/js/nicesellect.js')}}"></script>
 	<!-- Flex Slider JS -->
 	<script src="{{asset('frontend/js/flex-slider.js')}}"></script>
@@ -119,33 +122,33 @@
 	<!-- Easing JS -->
 	<script src="{{asset('frontend/js/easing.js')}}"></script>
 
-	<!-- Active JS -->
-	<script src="{{asset('frontend/js/active.js')}}"></script>
-
-	
-	@stack('scripts')
-	<script>
-		setTimeout(function(){
-		  $('.alert').slideUp();
-		},5000);
-		$(function() {
-		// ------------------------------------------------------- //
-		// Multi Level dropdowns
-		// ------------------------------------------------------ //
-			$("ul.dropdown-menu [data-toggle='dropdown']").on("click", function(event) {
-				event.preventDefault();
-				event.stopPropagation();
-
-				$(this).siblings().toggleClass("show");
+<!-- Active JS -->
+<script src="{{ asset('frontend/js/active.js') }}"></script>
 
 
-				if (!$(this).next().hasClass('show')) {
-				$(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
-				}
-				$(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function(e) {
-				$('.dropdown-submenu .show').removeClass("show");
-				});
+@stack('scripts')
+<script>
+    setTimeout(function() {
+        $('.alert').slideUp();
+    }, 5000);
+    $(function() {
+        // ------------------------------------------------------- //
+        // Multi Level dropdowns
+        // ------------------------------------------------------ //
+        $("ul.dropdown-menu [data-toggle='dropdown']").on("click", function(event) {
+            event.preventDefault();
+            event.stopPropagation();
 
-			});
-		});
-	  </script>
+            $(this).siblings().toggleClass("show");
+
+
+            if (!$(this).next().hasClass('show')) {
+                $(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
+            }
+            $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function(e) {
+                $('.dropdown-submenu .show').removeClass("show");
+            });
+
+        });
+    });
+</script>
