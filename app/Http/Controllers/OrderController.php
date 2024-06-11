@@ -12,10 +12,12 @@ use Notification;
 use Helper;
 use Illuminate\Support\Str;
 use App\Notifications\StatusNotification;
+use App\Services\Midtrans\CreateSnapTokenService;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification as FacadesNotification;
+use PhpParser\Node\Expr\Empty_;
 
 class OrderController extends Controller
 {
@@ -128,6 +130,7 @@ class OrderController extends Controller
             $order_data['payment_status'] = 'Unpaid';
         }
         $order->fill($order_data);
+
         $status = $order->save();
         if ($order)
             // dd($order->id);
@@ -144,10 +147,35 @@ class OrderController extends Controller
             session()->forget('cart');
             session()->forget('coupon');
         }
+
         Cart::where('user_id', auth()->user()->id)->where('order_id', null)->update(['order_id' => $order->id]);
+
+        $tempItem =
+            DB::table('carts')
+            ->join('products', 'carts.product_id', '=', 'products.id')
+            ->select('carts.id', 'carts.price', 'carts.quantity', 'carts.order_id', 'carts.user_id', 'products.title as name')
+            ->where('user_id', auth()->user()->id)
+            ->where('order_id', $order->id)
+            ->get()->toArray();
+
+
+        $items = [];
+        foreach ($tempItem as $key => $value) {
+            $items[] = (array) $value;
+        }
+
+        $order->items = $items;
+        $midtrans = new CreateSnapTokenService($order);
+        $snapToken = $midtrans->getSnapToken();
+        if (!empty($snapToken)) {
+            Order::where('id', $order->id)->update(['snap_token' => $snapToken]);
+        }
+
 
         // dd($users);        
         request()->session()->flash('success', 'Your product successfully placed in order');
+        request()->session()->flash('snap_token_status', true);
+        request()->session()->flash('snap_token', $snapToken);
         return redirect()->route('home');
     }
 
@@ -189,7 +217,7 @@ class OrderController extends Controller
         $this->validate($request, [
             'status' => 'required|in:new,process,delivered,cancel,return_request,return_accepted,return_rejected'
         ]);
-        
+
         $data = $request->all();
         // return $request->status;
         if ($request->status == 'delivered') {
@@ -241,6 +269,10 @@ class OrderController extends Controller
     {
         // return $request->all();
         $order = Order::where('user_id', auth()->user()->id)->where('order_number', $request->order_number)->first();
+        if (!empty($order->snap_token)) {
+            request()->session()->flash('snap_token_status', true);
+            request()->session()->flash('snap_token', $order->snap_token);
+        }
         if ($order) {
             if ($order->status == "new") {
                 request()->session()->flash('success', 'Your order has been placed. please wait.');
