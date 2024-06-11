@@ -26,14 +26,14 @@
                             {{ $order->status == 'cancel' ? 'selected' : '' }}>Cancel</option>
 
                         <option value="return_request"
-                            {{ $order->status == 'new' || $order->status == 'process' || $order->status == 'cancel' || $order->status == 'cancel' || $order->status == 'return_rejected' ? 'disabled' : '' }}
+                            {{ ($order->status == 'new' || $order->status == 'process' || $order->status == 'cancel' || $order->status == 'cancel' || $order->status == 'return_accepted' ? 'disabled' : '' || $order->status == 'return_rejected') ? 'disabled' : '' }}
                             {{ $order->status == 'return_request' ? 'selected' : '' }}>Return Requested</option>
                         <option value="return_accepted"
                             {{ $order->status == 'new' || $order->status == 'process' || $order->status == 'cancel' || $order->status == 'cancel' || $order->status == 'return_rejected' ? 'disabled' : '' }}
                             {{ $order->status == 'return_accepted' ? 'selected' : '' }}>Return Accepted</option>
-                        <option value="return_accepted"
+                        <option value="return_rejected"
                             {{ $order->status == 'new' || $order->status == 'process' || $order->status == 'cancel' || $order->status == 'cancel' || $order->status == 'return_accepted' ? 'disabled' : '' }}
-                            {{ $order->status == 'return_accepted' ? 'selected' : '' }}>Return Rejected</option>
+                            {{ $order->status == 'return_rejected' ? 'selected' : '' }}>Return Rejected</option>
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary">Update</button>
