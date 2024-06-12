@@ -201,7 +201,8 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::find($id);
-        return view('backend.order.edit')->with('order', $order);
+        $user = User::find($order->user_id);
+        return view('backend.order.edit')->with('order', $order)->with('user_role', $user->role);
     }
 
     /**
