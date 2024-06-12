@@ -9,7 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5|^8.0",
-        "barryvdh/laravel-dompdf": "^2.0.0",
+        "barryvdh/laravel-dompdf": "^2.2",
         "fakerphp/faker": "^1.21",
         "fruitcake/laravel-cors": "^3.0",
         "guzzlehttp/guzzle": "^7.0.1",

@@ -186,3 +186,5 @@ Route::group(['prefix' => '/user', 'middleware' => ['user']], function () {
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
+
+Route::get('/export-pdf', [App\Http\Controllers\PDFController::class, 'exportPDF'])->name('export-pdf');

@@ -8,8 +8,9 @@
                 @include('backend.layouts.notification')
             </div>
         </div>
-        <div class="card-header py-3">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-primary float-left">Order Lists</h6>
+            <a href="/export-pdf" target="_blank" class="btn btn-primary btn-sm">Export Pdf</a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -34,11 +35,6 @@
                                 $no = 1;
                             @endphp
                             @foreach ($orders as $order)
-                                @php
-                                    $shipping_charge = DB::table('shippings')
-                                        ->where('id', $order->shipping_id)
-                                        ->pluck('price');
-                                @endphp
                                 <tr>
                                     <td>{{ $no++ }}</td>
                                     <td>{{ $order->order_number }}</td>
