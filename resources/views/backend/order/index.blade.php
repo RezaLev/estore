@@ -17,31 +17,22 @@
                     <table class="table table-bordered" id="order-dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>S.N.</th>
+                                <th>No</th>
                                 <th>Order No.</th>
                                 <th>Name</th>
                                 <th>Email</th>
-                                <th>Quantity</th>
-                                <th>Charge</th>
+                                <th>Address</th>
                                 <th>Total Amount</th>
+                                <th>Created At</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <!-- <tfoot>
-                            <tr>
-                                <th>S.N.</th>
-                                <th>Order No.</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Quantity</th>
-                                <th>Charge</th>
-                                <th>Total Amount</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </tfoot> -->
                         <tbody>
+
+                            @php
+                                $no = 1;
+                            @endphp
                             @foreach ($orders as $order)
                                 @php
                                     $shipping_charge = DB::table('shippings')
@@ -49,13 +40,13 @@
                                         ->pluck('price');
                                 @endphp
                                 <tr>
-                                    <td>{{ $order->id }}</td>
+                                    <td>{{ $no++ }}</td>
                                     <td>{{ $order->order_number }}</td>
                                     <td>{{ $order->first_name }} {{ $order->last_name }}</td>
                                     <td>{{ $order->email }}</td>
-                                    <td>{{ $order->quantity }}</td>
-                                    <td>{{ Helper::rupiahFormatter($order->courier_charge) }}</td>
+                                    <td>{{ $order->address1 }} {{ $order->address2 }}</td>
                                     <td>{{ Helper::rupiahFormatter($order->total_amount, 2) }}</td>
+                                    <td>{{ $order->created_at }}</td>
                                     <td>
                                         @if ($order->status == 'new')
                                             <span class="badge badge-primary">{{ $order->status }}</span>
@@ -67,7 +58,7 @@
                                             <span class="badge badge-danger">{{ $order->status }}</span>
                                         @endif
                                     </td>
-                                    <td>
+                                    <td class="d-flex justify-content-center">
                                         <a href="{{ route('order.show', $order->id) }}"
                                             class="btn btn-warning btn-sm float-left mr-1"
                                             style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip"
