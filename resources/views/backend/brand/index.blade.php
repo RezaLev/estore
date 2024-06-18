@@ -1,41 +1,41 @@
 @extends('backend.layouts.master')
-@section('title','GriyaBambu || Brand Page')
+@section('title', 'GriyaBambu || Brand Page')
 @section('main-content')
- <!-- DataTales Example -->
- <div class="card shadow mb-4">
-     <div class="row">
-         <div class="col-md-12">
-            @include('backend.layouts.notification')
-         </div>
-     </div>
-    <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary float-left">Brand List</h6>
-      <a href="{{ route('brand.create') }}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip"
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="row">
+            <div class="col-md-12">
+                @include('backend.layouts.notification')
+            </div>
+        </div>
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary float-left">Brand List</h6>
+            <a href="{{ route('brand.create') }}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip"
                 data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Add Brand</a>
-    </div>
-    <div class="card-body">
-      <div class="table-responsive">
-      @if (count($brands) > 0)
-        <table class="table table-bordered" id="banner-dataTable" width="100%" cellspacing="0">
-          <thead>
-            <tr>
-              <th>S.N.</th>
-              <th>Title</th>
-              <th>Slug</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tfoot>
-            <tr>
-              <th>S.N.</th>
-              <th>Title</th>
-              <th>Slug</th>
-              <th>Status</th>
-              <th>Action</th>
-              </tr>
-          </tfoot>
-          <tbody>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                @if (count($brands) > 0)
+                    <table class="table table-bordered" id="banner-dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>S.N.</th>
+                                <th>Title</th>
+                                <th>Slug</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>S.N.</th>
+                                <th>Title</th>
+                                <th>Slug</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
                             @php
                                 $no = 1;
                             @endphp
@@ -65,8 +65,8 @@
                                                     class="fas fa-trash-alt"></i></button>
                                         </form>
                                     </td>
-                    {{-- Delete Modal --}}
-                    {{-- <div class="modal fade" id="delModal{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="#delModal{{$user->id}}Label" aria-hidden="true">
+                                    {{-- Delete Modal --}}
+                                    {{-- <div class="modal fade" id="delModal{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="#delModal{{$user->id}}Label" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
@@ -85,17 +85,17 @@
                           </div>
                         </div>
                     </div> --}}
-                </tr>  
-            @endforeach
-          </tbody>
-        </table>
-        <span style="float:right">{{ $brands->links() }}</span>
-        @else
-          <h6 class="text-center">No brands found!!! Please create brand</h6>
-        @endif
-      </div>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <span style="float:right">{{ $brands->links() }}</span>
+                @else
+                    <h6 class="text-center">No brands found!!! Please create brand</h6>
+                @endif
+            </div>
+        </div>
     </div>
-</div>
 @endsection
 
 @push('styles')
@@ -111,16 +111,15 @@
             /* Animation */
         }
 
-      .zoom:hover {
-        transform: scale(3.2);
-      }
-  </style>
+        .zoom:hover {
+            transform: scale(3.2);
+        }
+    </style>
 @endpush
 
 @push('scripts')
-
-  <!-- Page level plugins -->
-  <script src="{{ asset('backend/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+    <!-- Page level plugins -->
+    <script src="{{ asset('backend/vendor/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('backend/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 

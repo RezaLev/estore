@@ -25,7 +25,7 @@
                             {{ $order->status == 'delivered' || $order->status == 'return_request' || $order->status == 'return_accepted' || $order->status == 'return_rejected' ? 'disabled' : '' }}
                             {{ $order->status == 'cancel' ? 'selected' : '' }}>Cancel</option>
 
-                            @if ($user_role == 'agent')
+                        @if ($user_role == 'agent')
                             <option value="return_request"
                                 {{ ($order->status == 'new' || $order->status == 'process' || $order->status == 'cancel' || $order->status == 'cancel' || $order->status == 'return_accepted' ? 'disabled' : '' || $order->status == 'return_rejected') ? 'disabled' : '' }}
                                 {{ $order->status == 'return_request' ? 'selected' : '' }}>Return Requested</option>
