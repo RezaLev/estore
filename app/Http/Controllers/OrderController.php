@@ -164,6 +164,13 @@ class OrderController extends Controller
             $items[] = (array) $value;
         }
 
+        $items[] = [
+            'id' =>'ongkir',
+            'price' =>intval($order_data['courier_charge']),
+            'name' =>'Ongkir',
+            'quantity' =>1,
+        ];
+
         $order->items = $items;
         $midtrans = new CreateSnapTokenService($order);
         $snapToken = $midtrans->getSnapToken();
