@@ -390,7 +390,7 @@ class OrderController extends Controller
                 CURLOPT_TIMEOUT => 30,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS => "origin=256&originType=city&destination=" . $data['id'] . "&destinationType=city&weight=1000&courier=jne:jnt:ninja:pos:sicepat:tiki:anteraja",
+                CURLOPT_POSTFIELDS => "origin=492&originType=city&destination=" . $data['id'] . "&destinationType=city&weight=1000&courier=jne:jnt:ninja:pos:sicepat:tiki:anteraja",
                 CURLOPT_HTTPHEADER => array(
                     "content-type: application/x-www-form-urlencoded",
                     "key: " . env('RAJAONGKIR_API_KEY')

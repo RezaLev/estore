@@ -348,7 +348,7 @@
 
             checkPostCode = () => {
                 let code = $('#post_code').val()
-                if (typeof postCodeMap[code] != 'undefined') requestPostCode(code[0]);
+                if (typeof postCodeMap[code] != 'undefined') requestPostCode(postCodeMap[code]);
             }
 
             requestPostCode = (code) => {
