@@ -4,7 +4,7 @@
 
 @section('main-content')
     <!-- Breadcrumbs -->
-    <div class="breadcrumbs">
+    <div class="breadcrumbs bg-secondary">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -21,7 +21,8 @@
     <!-- End Breadcrumbs -->
 
     <!-- Shop Login -->
-    <section class="shop login section">
+    <section class="shop login section bg-secondary">
+        
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 offset-lg-3 col-12">

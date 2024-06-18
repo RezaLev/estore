@@ -130,7 +130,6 @@ class OrderController extends Controller
             $order_data['payment_status'] = 'Unpaid';
         }
         $order->fill($order_data);
-
         $status = $order->save();
         if ($order)
             // dd($order->id);
@@ -147,63 +146,61 @@ class OrderController extends Controller
             session()->forget('cart');
             session()->forget('coupon');
         }
-
         Cart::where('user_id', auth()->user()->id)->where('order_id', null)->update(['order_id' => $order->id]);
-
         $tempItem =
-            DB::table('carts')
-            ->join('products', 'carts.product_id', '=', 'products.id')
-            ->select('carts.id', 'carts.price', 'carts.quantity', 'carts.order_id', 'carts.user_id', 'products.title as name')
-            ->where('user_id', auth()->user()->id)
-            ->where('order_id', $order->id)
-            ->get()->toArray();
+        DB::table('carts')
+        ->join('products', 'carts.product_id', '=', 'products.id')
+        ->select('carts.id', 'carts.price', 'carts.quantity', 'carts.order_id', 'carts.user_id', 'products.title as name')
+        ->where('user_id', auth()->user()->id)
+        ->where('order_id', $order->id)
+        ->get()->toArray();
 
 
-        $items = [];
-        foreach ($tempItem as $key => $value) {
-            $items[] = (array) $value;
-        }
-
-        $order->items = $items;
-        $midtrans = new CreateSnapTokenService($order);
-        $snapToken = $midtrans->getSnapToken();
-        if (!empty($snapToken)) {
-            Order::where('id', $order->id)->update(['snap_token' => $snapToken]);
-        }
-
-
-        // dd($users);        
-        request()->session()->flash('success', 'Your product successfully placed in order');
-        request()->session()->flash('snap_token_status', true);
-        request()->session()->flash('snap_token', $snapToken);
-        return redirect()->route('home');
+    $items = [];
+    foreach ($tempItem as $key => $value) {
+        $items[] = (array) $value;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $order = Order::find($id);
-        // return $order;
-        return view('backend.order.show')->with('order', $order);
+    $order->items = $items;
+    $midtrans = new CreateSnapTokenService($order);
+    $snapToken = $midtrans->getSnapToken();
+    if (!empty($snapToken)) {
+        Order::where('id', $order->id)->update(['snap_token' => $snapToken]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $order = Order::find($id);
-        $user = User::find($order->user_id);
-        return view('backend.order.edit')->with('order', $order)->with('user_role', $user->role);
-    }
+
+    // dd($users);        
+    request()->session()->flash('success', 'Your product successfully placed in order');
+    request()->session()->flash('snap_token_status', true);
+    request()->session()->flash('snap_token', $snapToken);
+    return redirect()->route('home');
+}
+
+/**
+ * Display the specified resource.
+ *
+ * @param  int  $id
+ * @return \Illuminate\Http\Response
+ */
+public function show($id)
+{
+    $order = Order::find($id);
+    // return $order;
+    return view('backend.order.show')->with('order', $order);
+}
+
+/**
+ * Show the form for editing the specified resource.
+ *
+ * @param  int  $id
+ * @return \Illuminate\Http\Response
+ */
+public function edit($id)
+{
+    $order = Order::find($id);
+    $user = User::find($order->user_id);
+    return view('backend.order.edit')->with('order', $order)->with('user_role', $user->role);
+}
 
     /**
      * Update the specified resource in storage.
@@ -218,7 +215,7 @@ class OrderController extends Controller
         $this->validate($request, [
             'status' => 'required|in:new,process,delivered,cancel,return_request,return_accepted,return_rejected'
         ]);
-
+        
         $data = $request->all();
         // return $request->status;
         if ($request->status == 'delivered') {

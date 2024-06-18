@@ -188,3 +188,4 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 });
 
 Route::get('/export-pdf', [App\Http\Controllers\PDFController::class, 'exportPDF'])->name('export-pdf');
+
