@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use App\Notifications\StatusNotification;
 use App\Services\Midtrans\CreateSnapTokenService;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification as FacadesNotification;
@@ -26,10 +27,20 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::orderBy('id', 'DESC')->paginate(10);
-        return view('backend.order.index')->with('orders', $orders);
+        $query = Order::orderBy('id', 'DESC');
+        $startDate = Carbon::now()->startOfMonth()->toDateString();
+        $endDate = Carbon::now()->endOfMonth()->toDateString();
+
+        if ($request->has('start_date') && $request->has('end_date')) {
+            $startDate = $request->input('start_date');
+            $endDate = $request->input('end_date');
+        }
+        $query->whereBetween('created_at', [$startDate, $endDate]);
+
+        $orders = $query->paginate(10);
+        return view('backend.order.index')->with('orders', $orders)->with('startDate', $startDate)->with('endDate', $endDate);
     }
 
     /**
@@ -165,10 +176,10 @@ class OrderController extends Controller
         }
 
         $items[] = [
-            'id' =>'ongkir',
-            'price' =>intval($order_data['courier_charge']),
-            'name' =>'Ongkir',
-            'quantity' =>1,
+            'id' => 'ongkir',
+            'price' => intval($order_data['courier_charge']),
+            'name' => 'Ongkir',
+            'quantity' => 1,
         ];
 
         $order->items = $items;

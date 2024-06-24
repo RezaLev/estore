@@ -10,7 +10,15 @@
         </div>
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-primary float-left">Order Lists</h6>
-            <a href="/export-pdf" target="_blank" class="btn btn-primary btn-sm">Export Pdf</a>
+            <div class="d-flex ">
+                <form id="filter-form" class="form-inline" method="GET" action="{{ route('order.index') }}">
+                    <input type="text" id="datefilter" class="form-control mr-3" name="datefilter" />
+                    <input type="hidden" id="start_date" name="start_date">
+                    <input type="hidden" id="end_date" name="end_date">
+                </form>
+                <a href="/export-pdf" target="_blank" class="btn btn-primary btn-sm d-flex align-items-center"
+                    style="text-wrap:nowrap">Export Pdf</a>
+            </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -104,6 +112,20 @@
     <!-- Page level custom scripts -->
     <script src="{{ asset('backend/js/demo/datatables-demo.js') }}"></script>
     <script>
+        $('#datefilter').daterangepicker({
+            autoApply: true,
+            locale: {
+                format: 'DD/MM/YYYY',
+            },
+            startDate: moment('{{ $startDate }}').startOf('month').format('DD/MM/YYYY'),
+            endDate: moment('{{ $endDate }}').endOf('month').format('DD/MM/YYYY')
+        }, function(start, end, label) {
+            $('#start_date').val(start.format('YYYY-MM-DD'));
+            $('#end_date').val(end.format('YYYY-MM-DD'));
+
+            $('#filter-form').submit()
+        });
+
         $('#order-dataTable').DataTable({
             "columnDefs": [{
                 "orderable": false,

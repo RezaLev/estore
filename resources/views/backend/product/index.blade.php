@@ -35,22 +35,22 @@
                             </tr>
                         </thead>
                         <!-- <tfoot>
-                        <tr>
-                          <th>S.N.</th>
-                          <th>Title</th>
-                          <th>Category</th>
-                          <th>Is Featured</th>
-                          <th>Price</th>
-                          <th>Discount</th>
-                          <th>Size</th>
-                          <th>Condition</th>
-                          <th>Brand</th>
-                          <th>Stock</th>
-                          <th>Photo</th>
-                          <th>Status</th>
-                          <th>Action</th>
-                        </tr>
-                      </tfoot> -->
+                            <tr>
+                              <th>S.N.</th>
+                              <th>Title</th>
+                              <th>Category</th>
+                              <th>Is Featured</th>
+                              <th>Price</th>
+                              <th>Discount</th>
+                              <th>Size</th>
+                              <th>Condition</th>
+                              <th>Brand</th>
+                              <th>Stock</th>
+                              <th>Photo</th>
+                              <th>Status</th>
+                              <th>Action</th>
+                            </tr>
+                          </tfoot> -->
                         <tbody>
 
                             @php
@@ -163,7 +163,7 @@
     <script src="{{ asset('backend/js/demo/datatables-demo.js') }}"></script>
     <script>
         $('#product-dataTable').DataTable({
-            "scrollX": false "columnDefs": [{
+            "columnDefs": [{
                 "orderable": false,
                 "targets": [10, 11, 12]
             }]
