@@ -8,10 +8,25 @@
                 @include('backend.layouts.notification')
             </div>
         </div>
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary float-left">Product Lists</h6>
-            <a href="{{ route('product.create') }}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip"
-                data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Add Product</a>
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-primary">Product Lists</h6>
+            <div class="d-flex">
+                <form id="filter-form" method="GET" action="{{ route('product.index') }}">
+                    <div class="form-group mr-3 mb-0">
+                        <select name="category" id="category" class="form-control" onchange="this.form.submit()">
+                            <option value="all">All Categories</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}"
+                                    {{ request('category') == $category->id ? 'selected' : '' }}>{{ $category->title }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </form>
+                <a href="{{ route('product.create') }}"
+                    class="btn btn-primary btn-sm d-flex justify-content-center align-items-center" data-toggle="tooltip"
+                    data-placement="bottom" title="Add User"><i class="fas fa-plus mb-1 mr-2"></i> Add Product</a>
+            </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -31,25 +46,7 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <!-- <tfoot>
-                                <tr>
-                                  <th>S.N.</th>
-                                  <th>Title</th>
-                                  <th>Category</th>
-                                  <th>Is Featured</th>
-                                  <th>Price</th>
-                                  <th>Discount</th>
-                                  <th>Size</th>
-                                  <th>Condition</th>
-                                  <th>Brand</th>
-                                  <th>Stock</th>
-                                  <th>Photo</th>
-                                  <th>Status</th>
-                                  <th>Action</th>
-                                </tr>
-                              </tfoot> -->
                         <tbody>
-
                             @php
                                 $no = 1;
                             @endphp
@@ -59,17 +56,14 @@
                                         ->select('title')
                                         ->where('id', $product->child_cat_id)
                                         ->get();
-                                    // dd($sub_cat_info);
-                                    $brands = DB::table('brands')
-                                        ->select('title')
-                                        ->where('id', $product->brand_id)
-                                        ->get();
                                 @endphp
                                 <tr>
                                     <td>{{ $no++ }}</td>
                                     <td>{{ $product->title }}</td>
-                                    <td>{{ $product->title }}
-
+                                    <td>{{ $product->cat_info['title'] }}
+                                        <sub>
+                                            {{ $product->sub_cat_info->title ?? '' }}
+                                        </sub>
                                     </td>
                                     <td>Rs. {{ $product->price }} /-</td>
                                     <td> {{ $product->discount }}% OFF</td>
@@ -85,7 +79,6 @@
                                         @if ($product->photo)
                                             @php
                                                 $photo = explode(',', $product->photo);
-                                                // dd($photo);
                                             @endphp
                                             <img src="{{ $photo[0] }}" class="img-fluid zoom" style="max-width:80px"
                                                 alt="{{ $product->photo }}">
@@ -179,7 +172,6 @@
             $('.dltBtn').click(function(e) {
                 var form = $(this).closest('form');
                 var dataID = $(this).data('id');
-                // alert(dataID);
                 e.preventDefault();
                 swal({
                         title: "Are you sure?",
