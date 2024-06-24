@@ -22,12 +22,9 @@
                                 <th>No</th>
                                 <th>Title</th>
                                 <th>Category</th>
-                                <th>Is Featured</th>
                                 <th>Price</th>
                                 <th>Discount</th>
-                                <th>Size</th>
                                 <th>Condition</th>
-                                <th>Brand</th>
                                 <th>Stock</th>
                                 <th>Photo</th>
                                 <th>Status</th>
@@ -35,22 +32,22 @@
                             </tr>
                         </thead>
                         <!-- <tfoot>
-                            <tr>
-                              <th>S.N.</th>
-                              <th>Title</th>
-                              <th>Category</th>
-                              <th>Is Featured</th>
-                              <th>Price</th>
-                              <th>Discount</th>
-                              <th>Size</th>
-                              <th>Condition</th>
-                              <th>Brand</th>
-                              <th>Stock</th>
-                              <th>Photo</th>
-                              <th>Status</th>
-                              <th>Action</th>
-                            </tr>
-                          </tfoot> -->
+                                <tr>
+                                  <th>S.N.</th>
+                                  <th>Title</th>
+                                  <th>Category</th>
+                                  <th>Is Featured</th>
+                                  <th>Price</th>
+                                  <th>Discount</th>
+                                  <th>Size</th>
+                                  <th>Condition</th>
+                                  <th>Brand</th>
+                                  <th>Stock</th>
+                                  <th>Photo</th>
+                                  <th>Status</th>
+                                  <th>Action</th>
+                                </tr>
+                              </tfoot> -->
                         <tbody>
 
                             @php
@@ -74,12 +71,9 @@
                                     <td>{{ $product->title }}
 
                                     </td>
-                                    <td>{{ $product->is_featured == 1 ? 'Yes' : 'No' }}</td>
                                     <td>Rs. {{ $product->price }} /-</td>
                                     <td> {{ $product->discount }}% OFF</td>
-                                    <td>{{ $product->size }}</td>
                                     <td>{{ $product->condition }}</td>
-                                    <td> {{ ucfirst($product->brand) }}</td>
                                     <td>
                                         @if ($product->stock > 0)
                                             <span class="badge badge-primary">{{ $product->stock }}</span>
@@ -165,7 +159,7 @@
         $('#product-dataTable').DataTable({
             "columnDefs": [{
                 "orderable": false,
-                "targets": [10, 11, 12]
+                "targets": [7, 8, 9]
             }]
         });
 
