@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 
-@section('title', 'E-SHOP || Order Return Page')
+@section('title', 'GriyaBambu || Order Return Page')
 
 @section('main-content')
     <!-- Breadcrumbs -->

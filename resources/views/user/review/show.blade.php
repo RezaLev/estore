@@ -13,7 +13,7 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>S.N.</th>
+                            <th>No</th>
                             <th>Order No.</th>
                             <th>Name</th>
                             <th>Email</th>
@@ -25,8 +25,11 @@
                         </tr>
                     </thead>
                     <tbody>
+                    @php
+                                $no = 1;
+                            @endphp
                         <tr>
-                            <td>{{ $order->id }}</td>
+                            <td>{{ $no++}}</td>
                             <td>{{ $order->cart_id }}</td>
                             <td>{{ $order->first_name }} {{ $order->last_name }}</td>
                             <td>{{ $order->email }}</td>

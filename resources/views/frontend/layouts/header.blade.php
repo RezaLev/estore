@@ -31,7 +31,6 @@
                         <ul class="list-main">
                             <li><i class="ti-location-pin"></i> <a href="{{ route('order.track') }}">Track Order</a>
                             </li>
-                            {{-- <li><i class="ti-alarm-clock"></i> <a href="#">Daily deal</a></li> --}}
                             @auth
                                 @if (Auth::user()->role == 'admin')
                                     <li><i class="ti-user"></i> <a href="{{ route('admin') }}" target="_blank">Dashboard</a>
@@ -48,8 +47,8 @@
                                 @endif
                                 <li><i class="ti-power-off"></i> <a href="{{ route('user.logout') }}">Logout</a></li>
                             @else
-                                <li><i class="ti-power-off"></i><a href="{{ route('login.form') }}">Login /</a> <a
-                                        href="{{ route('register.form') }}">Register</a></li>
+                                <li><i class="ti-power-off"></i><a href="{{ route('login.form') }}">Login /</a>
+                                <a href="{{ route('register.form') }}">Register</a></li>
                             @endauth
                         </ul>
                     </div>
@@ -229,8 +228,7 @@
                                                     href="{{ route('product-grids') }}">Products</a><span
                                                     class="new">New</span></li>
                                             {{ Helper::getHeaderCategory() }}
-                                            <li class="{{ Request::path() == 'blog' ? 'active' : '' }}"><a
-                                                    href="{{ route('blog') }}">Blog</a></li>
+                                    
 
                                             <li class="{{ Request::path() == 'contact' ? 'active' : '' }}"><a
                                                     href="{{ route('contact') }}">Contact Us</a></li>

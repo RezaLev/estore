@@ -58,6 +58,7 @@
                 @foreach($roles as $role)
                     <option value="{{$role->role}}" {{(($role->role=='admin') ? 'selected' : '')}}>Admin</option>
                     <option value="{{$role->role}}" {{(($role->role=='user') ? 'selected' : '')}}>User</option>
+                    <option value="{{$role->role}}" {{(($role->role=='agent') ? 'selected' : '')}}>Agent</option>
                 @endforeach
             </select>
           @error('role')

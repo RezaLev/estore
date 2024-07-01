@@ -18,6 +18,14 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password','role','photo','status','provider','provider_id',
     ];
+    public static function countActiveUser()
+    {
+        $data = User::where('status','active')->count();
+        if ($data) {
+            return $data;
+        }
+        return 0;
+    }
 
     /**
      * The attributes that should be hidden for arrays.

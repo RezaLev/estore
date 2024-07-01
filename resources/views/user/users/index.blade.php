@@ -18,7 +18,7 @@
                 <table class="table table-bordered" id="user-dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>S.N.</th>
+                            <th>No</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Photo</th>

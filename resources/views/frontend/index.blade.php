@@ -16,8 +16,8 @@
                     <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
                         <img class="first-slide" src="{{ $banner->photo }}" alt="First slide">
                         <div class="carousel-caption d-none d-md-block text-left">
-                            <h1 class="wow fadeInDown">{{ $banner->title }}</h1>
-                            <p>{!! html_entity_decode($banner->description) !!}</p>
+                            <h1 class="wow fadeInDown text-white">{{ $banner->title }}</h1>
+                            <h4 class="text-white">{!! html_entity_decode($banner->description) !!}</h4> <br>
                             <a class="btn btn-lg ws-btn wow fadeInUpBig" href="{{ route('product-grids') }}"
                                 role="button">Shop Now<i class="far fa-arrow-alt-circle-right"></i></i></a>
                         </div>
@@ -56,7 +56,7 @@
                                         <img src="https://via.placeholder.com/600x370" alt="#">
                                     @endif
                                     <div class="content">
-                                        <h3>{{ $cat->title }}</h3>
+                                        <h3 class="text-warning">{{ $cat->title }}</h3>
                                         <a href="{{ route('product-cat', $cat->slug) }}">Discover Now</a>
                                     </div>
                                 </div>
@@ -355,7 +355,7 @@
     </section>
     <!-- End Shop Services Area -->
 
-    @include('frontend.layouts.newsletter')
+    <br><br><br>
 
     <!-- Modal -->
     @if ($product_lists)

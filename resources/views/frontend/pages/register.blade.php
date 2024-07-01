@@ -81,7 +81,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group login-btn">
-                                        <button class="btn" type="submit">Register</button>
+                                        <button class="btn btn-success" type="submit">Register</button>
                                         <a href="{{ route('login.form') }}" class="btn">Login</a>
                                     </div>
                                 </div>
@@ -95,37 +95,3 @@
     </section>
     <!--/ End Login -->
 @endsection
-
-@push('styles')
-    <style>
-        .shop.login .form .btn {
-            margin-right: 0;
-        }
-
-        .btn-facebook {
-            background: #39579A;
-        }
-
-        .btn-facebook:hover {
-            background: #073088 !important;
-        }
-
-        .btn-github {
-            background: #444444;
-            color: white;
-        }
-
-        .btn-github:hover {
-            background: black !important;
-        }
-
-        .btn-google {
-            background: #ea4335;
-            color: white;
-        }
-
-        .btn-google:hover {
-            background: rgb(243, 26, 26) !important;
-        }
-    </style>
-@endpush

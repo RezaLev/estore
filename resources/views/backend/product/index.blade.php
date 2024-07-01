@@ -65,7 +65,7 @@
                                             {{ $product->sub_cat_info->title ?? '' }}
                                         </sub>
                                     </td>
-                                    <td>Rs. {{ $product->price }} /-</td>
+                                    <td>Rp. {{ $product->price }} /-</td>
                                     <td> {{ $product->discount }}% OFF</td>
                                     <td>{{ $product->condition }}</td>
                                     <td>
@@ -112,7 +112,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <span style="float:right">{{ $products->links() }}</span>
+                    <span style="float:right">{{ $products->links()}}</span>
                 @else
                     <h6 class="text-center">No Products found!!! Please create Product</h6>
                 @endif
@@ -125,10 +125,6 @@
     <link href="{{ asset('backend/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
     <style>
-        div.dataTables_wrapper div.dataTables_paginate {
-            display: none;
-        }
-
         .zoom {
             transition: transform .2s;
             /* Animation */
@@ -151,7 +147,7 @@
     <script>
         $('#product-dataTable').DataTable({
             "columnDefs": [{
-                "orderable": false,
+                "orderable": true,
                 "targets": [7, 8, 9]
             }]
         });

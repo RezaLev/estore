@@ -55,14 +55,10 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group login-btn">
-                                        <button class="btn" type="submit">Login</button>
+                                        <button class="btn btn-success" type="submit">Login</button>
                                         <a href="{{ route('register.form') }}" class="btn">Register</a>
                                     </div>
-                                    @if (Route::has('password.request'))
-                                        <a class="" href="{{ route('password.reset') }}">
-                                            Lost your password?
-                                        </a>
-                                    @endif
+                                   
                                 </div>
                             </div>
                         </form>
