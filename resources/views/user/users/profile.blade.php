@@ -1,6 +1,6 @@
 @extends('user.layouts.master')
 
-@section('title','Admin Profile')
+@section('title', 'Admin Profile')
 
 @section('main-content')
 
@@ -81,53 +81,60 @@
                         </div> -->
 
                         <button type="submit" class="btn btn-success btn-sm">Update</button>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-   </div>
-</div>
+    </div>
 
 @endsection
 
 <style>
-    .breadcrumbs{
+    .breadcrumbs {
         list-style: none;
     }
-    .breadcrumbs li{
-        float:left;
-        margin-right:10px;
+
+    .breadcrumbs li {
+        float: left;
+        margin-right: 10px;
     }
-    .breadcrumbs li a:hover{
+
+    .breadcrumbs li a:hover {
         text-decoration: none;
     }
-    .breadcrumbs li .active{
-        color:red;
+
+    .breadcrumbs li .active {
+        color: red;
     }
-    .breadcrumbs li+li:before{
-      content:"/\00a0";
+
+    .breadcrumbs li+li:before {
+        content: "/\00a0";
     }
-    .image{
-        background:url('{{asset('backend/img/background.jpg')}}');
-        height:150px;
-        background-position:center;
-        background-attachment:cover;
+
+    .image {
+        background: url('{{ asset('backend/img/background.jpg') }}');
+        height: 150px;
+        background-position: center;
+        background-attachment: cover;
         position: relative;
     }
-    .image img{
+
+    .image img {
         position: absolute;
-        top:55%;
-        left:35%;
-        margin-top:30%;
+        top: 55%;
+        left: 35%;
+        margin-top: 30%;
     }
-    i{
+
+    i {
         font-size: 14px;
-        padding-right:8px;
+        padding-right: 8px;
     }
-  </style> 
+</style>
 
 @push('scripts')
-<script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
-<script>
-    $('#lfm').filemanager('image');
-</script>
+    <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
+    <script>
+        $('#lfm').filemanager('image');
+    </script>
 @endpush
