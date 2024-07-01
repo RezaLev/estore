@@ -218,7 +218,7 @@
                             @endif
                         </div>
                         <div class="row">
-                            <div class="col-md-12 justify-content-center d-flex">
+                            <div class="col-md-12 justify-content-center d-flex mt-5">
                                 {{ $products->appends($_GET)->links() }}
                             </div>
                         </div>

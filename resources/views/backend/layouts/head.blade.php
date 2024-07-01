@@ -206,6 +206,9 @@
         .w-5 {
             width: 1.25rem;
         }
+        div.dataTables_wrapper div.dataTables_paginate {
+            display: none;
+        }
     </style>
     @stack('styles')
 
