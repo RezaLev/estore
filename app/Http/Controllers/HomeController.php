@@ -83,6 +83,23 @@ class HomeController extends Controller
         }
     }
 
+    public function userOrderComplete($id)
+    {
+        $order = Order::find($id);
+        if ($order) {
+            if ($order->status == 'delivered') {
+                $order->fill(['status' => 'completed'])->save();
+                return redirect()->back()->with('success', 'Your order has been completed');
+            } else {
+                request()->session()->flash('error', 'Order not valid to completed');
+                return redirect()->route('user.order.index');
+            }
+        } else {
+            request()->session()->flash('error', 'Order can not found');
+            return redirect()->back();
+        }
+    }
+
     public function orderShow($id)
     {
         $order = Order::find($id);

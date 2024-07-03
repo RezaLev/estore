@@ -40,24 +40,22 @@
                                     <span class="badge badge-primary">{{ $order->status }}</span>
                                 @elseif($order->status == 'process')
                                     <span class="badge badge-warning">{{ $order->status }}</span>
-                                @elseif($order->status == 'delivered')
+                                @elseif($order->status == 'delivered' || $order->status == 'completed')
                                     <span class="badge badge-success">{{ $order->status }}</span>
                                 @else
                                     <span class="badge badge-danger">{{ $order->status }}</span>
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('order.edit', $order->id) }}"
-                                    class="btn btn-primary btn-sm float-left mr-1"
-                                    style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit"
-                                    data-placement="bottom"><i class="fas fa-edit"></i></a>
-                                <form method="POST" action="{{ route('order.destroy', [$order->id]) }}">
-                                    @csrf
-                                    @method('delete')
-                                    <button class="btn btn-danger btn-sm dltBtn" data-id={{ $order->id }}
-                                        style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip"
-                                        data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
-                                </form>
+                                @if ($order->status == 'new' || $order->status == 'process')
+                                    <form method="POST" action="{{ route('order.destroy', [$order->id]) }}">
+                                        @csrf
+                                        @method('delete')
+                                        <button class="btn btn-danger btn-sm dltBtn" data-id={{ $order->id }}
+                                            style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip"
+                                            data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     </tbody>

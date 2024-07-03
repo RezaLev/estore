@@ -306,6 +306,8 @@ class OrderController extends Controller
                 request()->session()->flash('success', 'Your order return request is accepted.');
             } elseif ($order->status == "return_rejected") {
                 request()->session()->flash('success', 'Your order return request is rejected.');
+            } elseif ($order->status == "completed") {
+                request()->session()->flash('success', 'Your order is completed.');
             }
             return redirect()->route('home');
         } else {
@@ -340,6 +342,8 @@ class OrderController extends Controller
                 request()->session()->flash('success', 'Your order return request is accepted.');
             } elseif ($order->status == "return_rejected") {
                 request()->session()->flash('success', 'Your order return request is rejected.');
+            } elseif ($order->status == "completed") {
+                request()->session()->flash('success', 'Your order is completed.');
             }
             return redirect()->route('home');
         } else {
