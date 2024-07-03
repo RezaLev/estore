@@ -1,3 +1,6 @@
+@php
+    use Carbon\Carbon;
+@endphp
 @extends('backend.layouts.master')
 
 @section('main-content')
@@ -50,7 +53,8 @@
                                     <td>{{ $order->email }}</td>
                                     <td>{{ $order->address1 }}</td>
                                     <td>{{ Helper::rupiahFormatter($order->total_amount, 2) }}</td>
-                                    <td>{{ $order->created_at }}</td>
+                                    <td>{{ Carbon::parse($order->created_at)->setTimezone('Asia/Jakarta')->format('Y-m-d H:i:s') }}
+                                    </td>
                                     <td>
                                         @if ($order->status == 'new')
                                             <span class="badge badge-primary">{{ $order->status }}</span>

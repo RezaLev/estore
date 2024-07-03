@@ -1,5 +1,7 @@
 @extends('user.layouts.master')
-
+@php
+    use Carbon\Carbon;
+@endphp
 @section('title', 'Order Detail')
 
 @section('main-content')
@@ -71,8 +73,8 @@
                                         </tr>
                                         <tr>
                                             <td>Order Date</td>
-                                            <td> : {{ $order->created_at->format('D d M, Y') }} at
-                                                {{ $order->created_at->format('g : i a') }} </td>
+                                            <td>{{ Carbon::parse($order->created_at)->setTimezone('Asia/Jakarta')->format('Y-m-d H:i:s') }}
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Quantity</td>
@@ -95,7 +97,7 @@
                                             <td>Total Amount</td>
                                             <td> : Rp {{ number_format($order->total_amount, 2) }}</td>
                                         </tr>
-                                        
+
                                     </table>
                                 </div>
                             </div>
