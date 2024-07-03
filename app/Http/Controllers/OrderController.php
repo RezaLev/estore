@@ -205,8 +205,8 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::find($id);
-        // return $order;
-        return view('backend.order.show')->with('order', $order);
+        $orderedProducts = Cart::where('order_id', $id)->get();
+        return view('backend.order.show', compact('order', 'orderedProducts'));
     }
 
     /**

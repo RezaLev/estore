@@ -1,7 +1,7 @@
-@extends('user.layouts.master')
 @php
     use Carbon\Carbon;
 @endphp
+@extends('backend.layouts.master')
 @section('title', 'Order Detail')
 
 @section('main-content')
@@ -16,7 +16,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Order No.</th>
+                            <th>Order No</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Quantity</th>
@@ -47,6 +47,10 @@
                                 @endif
                             </td>
                             <td>
+                                <a href="{{ route('order.edit', $order->id) }}"
+                                    class="btn btn-primary btn-sm float-left mr-1"
+                                    style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit"
+                                    data-placement="bottom"><i class="fas fa-edit"></i></a>
                                 <form method="POST" action="{{ route('order.destroy', [$order->id]) }}">
                                     @csrf
                                     @method('delete')
@@ -55,7 +59,6 @@
                                         data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
                                 </form>
                             </td>
-
                         </tr>
                     </tbody>
                 </table>
@@ -73,7 +76,7 @@
                                         </tr>
                                         <tr>
                                             <td>Order Date</td>
-                                            <td>{{ Carbon::parse($order->created_at)->setTimezone('Asia/Jakarta')->format('Y-m-d H:i:s') }}
+                                            <td> :{{ Carbon::parse($order->created_at)->setTimezone('Asia/Jakarta')->format('Y-m-d H:i:s') }}
                                             </td>
                                         </tr>
                                         <tr>
@@ -85,19 +88,17 @@
                                             <td> : {{ $order->status }}</td>
                                         </tr>
                                         <tr>
-                                            @php
-                                                $shipping_charge = DB::table('shippings')
-                                                    ->where('id', $order->shipping_id)
-                                                    ->pluck('price');
-                                            @endphp
                                             <td>Shipping Charge</td>
                                             <td> : {{ Helper::rupiahFormatter($order->courier_charge) }}</td>
                                         </tr>
                                         <tr>
-                                            <td>Total Amount</td>
-                                            <td> : Rp {{ number_format($order->total_amount, 2) }}</td>
+                                            <td>Coupon</td>
+                                            <td> : {{ Helper::rupiahFormatter($order->coupon, 2) }}</td>
                                         </tr>
-
+                                        <tr>
+                                            <td>Total Amount</td>
+                                            <td> : {{ Helper::rupiahFormatter($order->total_amount, 2) }}</td>
+                                        </tr>
                                     </table>
                                 </div>
                             </div>
@@ -130,9 +131,42 @@
                                             <td>Post Code</td>
                                             <td> : {{ $order->post_code }}</td>
                                         </tr>
+                                        <tr>
+                                            <td>Shipping Name</td>
+                                            <td> : {{ $order->courier_name }}</td>
+                                        </tr>
                                     </table>
                                 </div>
                             </div>
+
+                            <div class="col-lg-12 col-lx-8 mt-4">
+                                <div class="ordered-products-info">
+                                    <h4 class="text-center pb-4">ORDERED PRODUCTS</h4>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Product</th>
+                                                <th>Price</th>
+                                                <th>Quantity</th>
+                                                <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($orderedProducts as $key => $product)
+                                                <tr>
+                                                    <td>{{ $key + 1 }}</td>
+                                                    <td>{{ $product->product->title }}</td>
+                                                    <td>{{ Helper::rupiahFormatter($product->price, 2) }}</td>
+                                                    <td>{{ $product->quantity }}</td>
+                                                    <td>{{ Helper::rupiahFormatter($product->amount, 2) }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </section>
@@ -145,13 +179,15 @@
 @push('styles')
     <style>
         .order-info,
-        .shipping-info {
+        .shipping-info,
+        .ordered-products-info {
             background: #ECECEC;
             padding: 20px;
         }
 
         .order-info h4,
-        .shipping-info h4 {
+        .shipping-info h4,
+        .ordered-products-info h4 {
             text-decoration: underline;
         }
     </style>

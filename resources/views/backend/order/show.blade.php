@@ -59,7 +59,6 @@
                                         data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
                                 </form>
                             </td>
-
                         </tr>
                     </tbody>
                 </table>
@@ -139,6 +138,35 @@
                                     </table>
                                 </div>
                             </div>
+
+                            <div class="col-lg-12 col-lx-8 mt-4">
+                                <div class="ordered-products-info">
+                                    <h4 class="text-center pb-4">ORDERED PRODUCTS</h4>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Product</th>
+                                                <th>Price</th>
+                                                <th>Quantity</th>
+                                                <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($orderedProducts as $key => $product)
+                                                <tr>
+                                                    <td>{{ $key + 1 }}</td>
+                                                    <td>{{ $product->product->title }}</td>
+                                                    <td>{{ Helper::rupiahFormatter($product->price, 2) }}</td>
+                                                    <td>{{ $product->quantity }}</td>
+                                                    <td>{{ Helper::rupiahFormatter($product->amount, 2) }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </section>
@@ -151,13 +179,15 @@
 @push('styles')
     <style>
         .order-info,
-        .shipping-info {
+        .shipping-info,
+        .ordered-products-info {
             background: #ECECEC;
             padding: 20px;
         }
 
         .order-info h4,
-        .shipping-info h4 {
+        .shipping-info h4,
+        .ordered-products-info h4 {
             text-decoration: underline;
         }
     </style>
