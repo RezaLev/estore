@@ -111,7 +111,7 @@
                     </p>
                     <p>
                         <strong>Address: </strong>
-                        {{ $order->address1 }} OR {{ $order->address2 }}
+                        {{ $order->address1 }}
                     </p>
                     <p><strong>Phone:</strong> {{ $order->phone }}</p>
                     <p><strong>Email:</strong> {{ $order->email }}</p>

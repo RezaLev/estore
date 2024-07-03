@@ -48,7 +48,7 @@
                                     <td>{{ $order->order_number }}</td>
                                     <td>{{ $order->first_name }} {{ $order->last_name }}</td>
                                     <td>{{ $order->email }}</td>
-                                    <td>{{ $order->address1 }} {{ $order->address2 }}</td>
+                                    <td>{{ $order->address1 }}</td>
                                     <td>{{ Helper::rupiahFormatter($order->total_amount, 2) }}</td>
                                     <td>{{ $order->created_at }}</td>
                                     <td>
