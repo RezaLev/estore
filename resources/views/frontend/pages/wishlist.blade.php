@@ -54,8 +54,8 @@
                                         </td>
                                         <td><a href="{{ route('add-to-cart', $wishlist->product['slug']) }}"
                                                 class='btn text-white'>Add To Cart</a></td>
-                                        <td class="action" data-title="Remove"><a
-                                                href="{{ route('wishlist-delete', $wishlist->id) }}"><i
+                                        <td class="action" data-title="Remove"><a href="javascript:void(0);" class="remove"
+                                                onclick="confirmDelete('{{ route('wishlist-delete', $wishlist->id) }}');"><i
                                                     class="ti-trash remove-icon"></i></a></td>
                                     </tr>
                                 @endforeach
@@ -249,6 +249,26 @@
     <!-- Modal end -->
 
 @endsection
+@push('styles')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+@endpush
 @push('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmDelete(deleteUrl) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#222',
+                cancelButtonColor: '#ea8e1e',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = deleteUrl;
+                }
+            });
+        }
+    </script>
 @endpush

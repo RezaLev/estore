@@ -48,7 +48,8 @@
                                 <li><i class="ti-power-off"></i> <a href="{{ route('user.logout') }}">Logout</a></li>
                             @else
                                 <li><i class="ti-power-off"></i><a href="{{ route('login.form') }}">Login /</a>
-                                <a href="{{ route('register.form') }}">Register</a></li>
+                                    <a href="{{ route('register.form') }}">Register</a>
+                                </li>
                             @endauth
                         </ul>
                     </div>
@@ -135,8 +136,10 @@
                                                 $photo = explode(',', $data->product['photo']);
                                             @endphp
                                             <li>
-                                                <a href="{{ route('wishlist-delete', $data->id) }}" class="remove"
-                                                    title="Remove this item"><i class="fa fa-remove"></i></a>
+                                                <a href="javascript:void(0);" class="remove" title="Remove this item"
+                                                    onclick="confirmDelete('{{ route('wishlist-delete', $data->id) }}');">
+                                                    <i class="fa fa-remove"></i>
+                                                </a>
                                                 <a class="cart-img" href="#"><img src="{{ $photo[0] }}"
                                                         alt="{{ $photo[0] }}"></a>
                                                 <h4><a href="{{ route('product-detail', $data->product['slug']) }}"
@@ -156,6 +159,23 @@
                                         <a href="{{ route('cart') }}" class="btn animate">Cart</a>
                                     </div>
                                 </div>
+                                <script>
+                                    function confirmDelete(deleteUrl) {
+                                        Swal.fire({
+                                            title: 'Are you sure?',
+                                            text: "You won't be able to revert this!",
+                                            icon: 'warning',
+                                            showCancelButton: true,
+                                            confirmButtonColor: '#222',
+                                            cancelButtonColor: '#ea8e1e',
+                                            confirmButtonText: 'Yes, delete it!'
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                window.location.href = deleteUrl;
+                                            }
+                                        });
+                                    }
+                                </script>
                             @endauth
                             <!--/ End Shopping Item -->
                         </div>
@@ -228,7 +248,7 @@
                                                     href="{{ route('product-grids') }}">Products</a><span
                                                     class="new">New</span></li>
                                             {{ Helper::getHeaderCategory() }}
-                                    
+
 
                                             <li class="{{ Request::path() == 'contact' ? 'active' : '' }}"><a
                                                     href="{{ route('contact') }}">Contact Us</a></li>
