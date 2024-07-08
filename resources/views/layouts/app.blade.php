@@ -76,5 +76,13 @@
             @yield('content')
         </main>
     </div>
+    <script>
+        	$(() => {
+                setTimeout(() => {
+                    $('.st-show-total').remove()
+                }, 500);
+            });
+
+    </script>
 </body>
 </html>

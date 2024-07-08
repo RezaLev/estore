@@ -56,8 +56,8 @@
                                         <img src="https://via.placeholder.com/600x370" alt="#">
                                     @endif
                                     <div class="content">
-                                        <h3 class="text-warning">{{ $cat->title }}</h3>
-                                        <a href="{{ route('product-cat', $cat->slug) }}">Discover Now</a>
+                                        <h2 class="text-white">{{ $cat->title }}</h2>
+                                        <a class="btn btn-lg ws-btn wow fadeInUpBig text-white" href="{{ route('product-cat', $cat->slug) }}">Discover Now</a>
                                     </div>
                                 </div>
                             </div>

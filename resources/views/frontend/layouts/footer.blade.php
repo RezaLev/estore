@@ -195,3 +195,10 @@
         });
     </script>
 @endif
+<script>
+    	$(() => {
+                setTimeout(() => {
+                    $('.st-show-total').remove()
+                }, 500);
+            });
+</script>
