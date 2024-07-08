@@ -80,9 +80,12 @@
                                                     class="money">{{ Helper::rupiahFormatter($cart['amount']) }}</span>
                                             </td>
 
-                                            <td class="action" data-title="Remove"><a
-                                                    href="{{ route('cart-delete', $cart->id) }}"><i
-                                                        class="ti-trash remove-icon"></i></a></td>
+                                            <td class="action" data-title="Remove">
+                                            <a href="javascript:void(0);" class="remove" title="Remove this item"
+                                                    onclick="confirmDelete('{{ route('cart-delete', $cart->id) }}');">
+                                                    <i class="ti-trash remove-icon"></i>
+                                                </a>    
+                                            </td>
                                         </tr>
                                     @endforeach
                                     <track>
@@ -294,5 +297,22 @@
             });
 
         });
+    </script>
+      <script>
+        function confirmDelete(deleteUrl) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#222',
+                cancelButtonColor: '#ea8e1e',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = deleteUrl;
+                }
+            });
+        }
     </script>
 @endpush

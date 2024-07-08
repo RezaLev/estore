@@ -199,8 +199,10 @@
                                                 $photo = explode(',', $data->product['photo']);
                                             @endphp
                                             <li>
-                                                <a href="{{ route('cart-delete', $data->id) }}" class="remove"
-                                                    title="Remove this item"><i class="fa fa-remove"></i></a>
+                                                <a href="javascript:void(0);" class="remove" title="Remove this item"
+                                                    onclick="confirmDelete('{{ route('cart-delete', $data->id) }}');">
+                                                    <i class="fa fa-remove"></i>
+                                                </a>
                                                 <a class="cart-img" href="#"><img src="{{ $photo[0] }}"
                                                         alt="{{ $photo[0] }}"></a>
                                                 <h4><a href="{{ route('product-detail', $data->product['slug']) }}"
@@ -208,7 +210,6 @@
                                                 <p class="quantity">{{ $data->quantity }} x - <span
                                                         class="amount">{{ Helper::rupiahFormatter($data->price, 2) }}</span>
                                                 </p>
-                                            </li>
                                         @endforeach
                                     </ul>
                                     <div class="bottom">
