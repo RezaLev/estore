@@ -10,8 +10,14 @@
         </div>
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary float-left">Users List</h6>
+            <select id="roleFilter" class="form-control form-control-sm w-auto float-right" onchange="filterByRole()">
+                <option value="">All Roles</option>
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+                <option value="agent">Agent</option>
+            </select> 
             <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip"
-                data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Add User</a>
+                data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Add User</a>&nbsp;
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -28,18 +34,6 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <!-- <tfoot>
-                                <tr>
-                                    <th>S.N.</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Photo</th>
-                                    <th>Join Date</th>
-                                    <th>Role</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                  </tr>
-                              </tfoot> -->
                     <tbody>
                         @php
                             $no = 1;
@@ -133,7 +127,19 @@
                 "targets": [6, 7]
             }]
         });
+        function filterByRole() {
+        var selectedRole = $('#roleFilter').val().toLowerCase();
 
+        $('#user-dataTable tbody tr').filter(function() {
+            var rowRole = $(this).find('td:nth-child(6)').text().toLowerCase();
+
+            if (selectedRole === '' || rowRole === selectedRole) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    }
         // Sweet alert
 
         function deleteData(id) {

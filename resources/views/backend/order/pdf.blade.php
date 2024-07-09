@@ -114,7 +114,6 @@
                         {{ $order->address1 }}
                     </p>
                     <p><strong>Phone:</strong> {{ $order->phone }}</p>
-                    <p><strong>Email:</strong> {{ $order->email }}</p>
                 </div>
             </div>
             <div class="invoice-right-top float-right" class="text-right">

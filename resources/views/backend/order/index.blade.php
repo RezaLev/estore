@@ -13,7 +13,13 @@
         </div>
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-primary float-left">Order Lists</h6>
+            
             <div class="d-flex ">
+            <form class="form-inline" id="searchForm">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search by Name" aria-label="Search" id="searchName">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search by address." aria-label="Search" id="searchAdd">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="searchOrders()">Search</button>
+            </form> &nbsp;
                 <form id="filter-form" class="form-inline" method="GET" action="{{ route('order.index') }}">
                     <input type="text" id="datefilter" class="form-control mr-3" name="datefilter" />
                     <input type="hidden" id="start_date" name="start_date">
@@ -32,7 +38,6 @@
                                 <th>No</th>
                                 <th>Order No.</th>
                                 <th>Name</th>
-                                <th>Email</th>
                                 <th>Address</th>
                                 <th>Total Amount</th>
                                 <th>Created At</th>
@@ -41,7 +46,6 @@
                             </tr>
                         </thead>
                         <tbody>
-
                             @php
                                 $no = 1;
                             @endphp
@@ -50,7 +54,6 @@
                                     <td>{{ $no++ }}</td>
                                     <td>{{ $order->order_number }}</td>
                                     <td>{{ $order->first_name }} {{ $order->last_name }}</td>
-                                    <td>{{ $order->email }}</td>
                                     <td>{{ $order->address1 }}</td>
                                     <td>{{ Helper::rupiahFormatter($order->total_amount, 2) }}</td>
                                     <td>{{ Carbon::parse($order->created_at)->setTimezone('Asia/Jakarta')->format('Y-m-d H:i:s') }}
@@ -139,6 +142,21 @@
             }]
         });
 
+        function searchOrders() {
+        var name = $('#searchName').val().toLowerCase();
+        var address = $('#searchAdd').val().toLowerCase();
+
+        $('#order-dataTable tbody tr').filter(function() {
+            var rowName = $(this).find('td:nth-child(3)').text().toLowerCase();
+            var rowAddress = $(this).find('td:nth-child(4)').text().toLowerCase();
+
+            if ((name === '' || rowName.includes(name)) && (address === '' || rowAddress.includes(address))) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    }
         // Sweet alert
 
         function deleteData(id) {

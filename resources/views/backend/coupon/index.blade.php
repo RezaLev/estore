@@ -38,9 +38,12 @@
                                         </tr>
                                     </tfoot> -->
                         <tbody>
+                        @php
+                                $no = 1;
+                            @endphp
                             @foreach ($coupons as $coupon)
                                 <tr>
-                                    <td>{{ $coupon->id }}</td>
+                                    <td>{{ $no++ }}</td>
                                     <td>{{ $coupon->code }}</td>
                                     <td>
                                         @if ($coupon->type == 'fixed')

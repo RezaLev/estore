@@ -311,7 +311,7 @@ class OrderController extends Controller
             }
             return redirect()->route('home');
         } else {
-            request()->session()->flash('error', 'Invalid order numer please try again');
+            request()->session()->flash('error', 'Invalid order number please try again');
             return back();
         }
     }
@@ -347,7 +347,7 @@ class OrderController extends Controller
             }
             return redirect()->route('home');
         } else {
-            request()->session()->flash('error', 'Invalid order numer please try again');
+            request()->session()->flash('error', 'Invalid order number please try again');
             return back();
         }
     }
@@ -367,7 +367,7 @@ class OrderController extends Controller
     {
         $year = \Carbon\Carbon::now()->year;
         // dd($year);
-        $items = Order::with(['cart_info'])->whereYear('created_at', $year)->where('status', 'delivered')->get()
+        $items = Order::with(['cart_info'])->whereYear('created_at', $year)->where('status', 'completed')->get()
             ->groupBy(function ($d) {
                 return \Carbon\Carbon::parse($d->created_at)->format('m');
             });
