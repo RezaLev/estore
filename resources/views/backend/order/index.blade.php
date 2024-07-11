@@ -69,12 +69,12 @@
                                     <td>
                                         @switch($order->approved_status)
                                             @case('0')
-                                                <span class="badge badge-warning">Menunggu Persetujuan</span>
+                                                <span class="badge badge-warning">waiting approval</span>
                                             @break
 
                                             @case(null)
                                             @case('1')
-                                                @if ($order->status == 'new')
+                                                @if ($order->status == 'received')
                                                     <span class="badge badge-primary">{{ $order->status }}</span>
                                                 @elseif($order->status == 'process')
                                                     <span class="badge badge-warning">{{ $order->status }}</span>
@@ -86,7 +86,7 @@
                                             @break
 
                                             @case('2')
-                                                <span class="badge badge-danger">Ditolak</span>
+                                                <span class="badge badge-danger">reject</span>
                                             @break
                                         @endswitch
                                     </td>
@@ -114,7 +114,7 @@
 
                                             @case('1')
                                                 @if (
-                                                    $order->status == 'new' ||
+                                                    $order->status == 'received' ||
                                                         $order->status == 'process' ||
                                                         $order->status == 'delivered' ||
                                                         $order->status == 'return_request')

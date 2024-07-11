@@ -65,7 +65,7 @@ class ProductController extends Controller
             'cat_id' => 'required|exists:categories,id',
             'child_cat_id' => 'nullable|exists:categories,id',
             'status' => 'required|in:active,inactive',
-            'condition' => 'required|in:default,new,hot',
+            'condition' => 'required|in:default,received,hot',
             'price' => 'required|numeric',
             'discount' => 'nullable|numeric'
         ]);
@@ -150,7 +150,7 @@ class ProductController extends Controller
             'cat_id' => 'required|exists:categories,id',
             'child_cat_id' => 'nullable|exists:categories,id',
             'status' => 'required|in:active,inactive',
-            'condition' => 'required|in:default,new,hot',
+            'condition' => 'required|in:default,received,hot',
             'price' => 'required|numeric',
             'discount' => 'nullable|numeric'
         ]);

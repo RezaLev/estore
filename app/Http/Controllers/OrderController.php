@@ -147,7 +147,7 @@ class OrderController extends Controller
             }
         }
         // return $order_data['total_amount'];
-        $order_data['status'] = "new";
+        $order_data['status'] = "received";
         if (request('payment_method') == 'paypal') {
             $order_data['payment_method'] = 'paypal';
             $order_data['payment_status'] = 'paid';
@@ -249,7 +249,7 @@ class OrderController extends Controller
     {
         $order = Order::find($id);
         $this->validate($request, [
-            'status' => 'required|in:new,process,delivered,cancel,return_request,return_accepted,return_rejected'
+            'status' => 'required|in:received,process,delivered,cancel,return_request,return_accepted,return_rejected'
         ]);
 
         $data = $request->all();
@@ -350,7 +350,7 @@ class OrderController extends Controller
                     break;
                 case null:
                 case '1':
-                    if ($order->status == "new") {
+                    if ($order->status == "received") {
                         request()->session()->flash('success', 'Your order has been placed. please wait.');
                     } elseif ($order->status == "process") {
                         request()->session()->flash('success', 'Your order is under processing please wait.');
@@ -390,7 +390,7 @@ class OrderController extends Controller
         $order = Order::where('user_id', auth()->user()->id)->where('order_number', $request->order_number)->first();
 
         if ($order) {
-            if ($order->status == "new") {
+            if ($order->status == "received") {
                 request()->session()->flash('success', 'Your order has been placed. please wait.');
             } elseif ($order->status == "process") {
                 request()->session()->flash('success', 'Your order is under processing please wait.');

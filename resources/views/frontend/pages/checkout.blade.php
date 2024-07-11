@@ -119,7 +119,7 @@
                                             Shipping Cost
                                             @if (Helper::cartCount() > 0)
                                                 <select name="shipping" class="nice-select">
-                                                    <option value="">Select your address</option>
+                                                    <option value="">Select your shipping</option>
                                                 </select>
                                             @else
                                                 <span>Free</span>

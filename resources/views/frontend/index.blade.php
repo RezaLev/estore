@@ -78,7 +78,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-title">
-                        <h2>All Products</h2>
+                        <h2>Products</h2>
                     </div>
                 </div>
             </div>
@@ -195,7 +195,50 @@
     <!-- Start Midium Banner  -->
 
     <!-- End Midium Banner -->
-
+    <!-- Start Shop Services Area -->
+    <section class="shop-services section home">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Service -->
+                    <div class="single-service">
+                        <i class="ti-rocket"></i>
+                        <h4>Free shipping</h4>
+                        <p>Orders over $100</p>
+                    </div>
+                    <!-- End Single Service -->
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Service -->
+                    <div class="single-service">
+                        <i class="ti-reload"></i>
+                        <h4>Get a coupom</h4>
+                        <p>Within more checkout</p>
+                    </div>
+                    <!-- End Single Service -->
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Service -->
+                    <div class="single-service">
+                        <i class="ti-lock"></i>
+                        <h4>Secure Payment</h4>
+                        <p>100% secure payment</p>
+                    </div>
+                    <!-- End Single Service -->
+                </div>
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Service -->
+                    <div class="single-service">
+                        <i class="ti-tag"></i>
+                        <h4>Best Price</h4>
+                        <p>Guaranteed price</p>
+                    </div>
+                    <!-- End Single Service -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Shop Services Area -->
     <!-- Start Most Popular -->
     <div class="product-area most-popular section">
         <div class="container">
@@ -268,53 +311,6 @@
     </div>
     <!-- End Most Popular Area -->
     <!-- End Shop Home List  -->
-    <!-- Start Shop Services Area -->
-    <section class="shop-services section home">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Service -->
-                    <div class="single-service">
-                        <i class="ti-rocket"></i>
-                        <h4>Free shipping</h4>
-                        <p>Orders over $100</p>
-                    </div>
-                    <!-- End Single Service -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Service -->
-                    <div class="single-service">
-                        <i class="ti-reload"></i>
-                        <h4>Get a coupom</h4>
-                        <p>Within more checkout</p>
-                    </div>
-                    <!-- End Single Service -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Service -->
-                    <div class="single-service">
-                        <i class="ti-lock"></i>
-                        <h4>Secure Payment</h4>
-                        <p>100% secure payment</p>
-                    </div>
-                    <!-- End Single Service -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Service -->
-                    <div class="single-service">
-                        <i class="ti-tag"></i>
-                        <h4>Best Price</h4>
-                        <p>Guaranteed price</p>
-                    </div>
-                    <!-- End Single Service -->
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End Shop Services Area -->
-
-    <br><br><br>
-
     <!-- Modal -->
     @if ($product_lists)
         @foreach ($product_lists as $key => $product)

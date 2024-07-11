@@ -37,18 +37,31 @@
                             <td>{{ Helper::rupiahFormatter($order->courier_charge) }}</td>
                             <td>{{ Helper::rupiahFormatter($order->total_amount, 2) }}</td>
                             <td>
-                                @if ($order->status == 'new')
-                                    <span class="badge badge-primary">{{ $order->status }}</span>
-                                @elseif($order->status == 'process')
-                                    <span class="badge badge-warning">{{ $order->status }}</span>
-                                @elseif($order->status == 'delivered' || $order->status == 'completed')
-                                    <span class="badge badge-success">{{ $order->status }}</span>
-                                @else
-                                    <span class="badge badge-danger">{{ $order->status }}</span>
-                                @endif
-                            </td>
+                                    @switch($order->approved_status)
+                                        @case('0')
+                                            <span class="badge badge-warning">waiting approval</span>
+                                        @break
+
+                                        @case(null)
+                                        @case('1')
+                                            @if ($order->status == 'received')
+                                                <span class="badge badge-primary">{{ $order->status }}</span>
+                                            @elseif($order->status == 'process')
+                                                <span class="badge badge-warning">{{ $order->status }}</span>
+                                            @elseif($order->status == 'delivered' || $order->status == 'completed')
+                                                <span class="badge badge-success">{{ $order->status }}</span>
+                                            @else
+                                                <span class="badge badge-danger">{{ $order->status }}</span>
+                                            @endif
+                                        @break
+
+                                        @case('2')
+                                            <span class="badge badge-danger">reject</span>
+                                        @break
+                                    @endswitch
+                                </td>
                             <td>
-                                @if ($order->status == 'new' || $order->status == 'process')
+                                @if ($order->status == 'received' || $order->status == 'process')
                                     <form method="POST" action="{{ route('order.destroy', [$order->id]) }}">
                                         @csrf
                                         @method('delete')

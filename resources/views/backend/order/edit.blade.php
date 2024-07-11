@@ -12,9 +12,9 @@
                 <div class="form-group">
                     <label for="status">Status :</label>
                     <select name="status" id="" class="form-control">
-                        <option value="new"
+                        <option value="received"
                             {{ $order->status == 'delivered' || $order->status == 'process' || $order->status == 'cancel' || $order->status == 'return_request' || $order->status == 'return_accepted' || $order->status == 'return_rejected' ? 'disabled' : '' }}
-                            {{ $order->status == 'new' ? 'selected' : '' }}>New</option>
+                            {{ $order->status == 'received' ? 'selected' : '' }}>received</option>
                         <option value="process"
                             {{ $order->status == 'delivered' || $order->status == 'cancel' || $order->status == 'return_request' || $order->status == 'return_accepted' || $order->status == 'return_rejected' ? 'disabled' : '' }}
                             {{ $order->status == 'process' ? 'selected' : '' }}>process</option>
@@ -27,13 +27,13 @@
 
                         @if ($user_role == 'agent')
                             <option value="return_request"
-                                {{ ($order->status == 'new' || $order->status == 'process' || $order->status == 'cancel' || $order->status == 'cancel' || $order->status == 'return_accepted' ? 'disabled' : '' || $order->status == 'return_rejected') ? 'disabled' : '' }}
+                                {{ ($order->status == 'received' || $order->status == 'process' || $order->status == 'cancel' || $order->status == 'cancel' || $order->status == 'return_accepted' ? 'disabled' : '' || $order->status == 'return_rejected') ? 'disabled' : '' }}
                                 {{ $order->status == 'return_request' ? 'selected' : '' }}>Return Requested</option>
                             <option value="return_accepted"
-                                {{ $order->status == 'new' || $order->status == 'process' || $order->status == 'cancel' || $order->status == 'cancel' || $order->status == 'return_rejected' ? 'disabled' : '' }}
+                                {{ $order->status == 'received' || $order->status == 'process' || $order->status == 'cancel' || $order->status == 'cancel' || $order->status == 'return_rejected' ? 'disabled' : '' }}
                                 {{ $order->status == 'return_accepted' ? 'selected' : '' }}>Return Accepted</option>
                             <option value="return_rejected"
-                                {{ $order->status == 'new' || $order->status == 'process' || $order->status == 'cancel' || $order->status == 'cancel' || $order->status == 'return_accepted' ? 'disabled' : '' }}
+                                {{ $order->status == 'received' || $order->status == 'process' || $order->status == 'cancel' || $order->status == 'cancel' || $order->status == 'return_accepted' ? 'disabled' : '' }}
                                 {{ $order->status == 'return_rejected' ? 'selected' : '' }}>Return Rejected</option>
                         @endif
                     </select>

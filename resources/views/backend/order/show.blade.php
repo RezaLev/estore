@@ -32,7 +32,7 @@
                             <td>{{ Helper::rupiahFormatter($order->courier_charge) }}</td>
                             <td>{{ Helper::rupiahFormatter($order->total_amount, 2) }}</td>
                             <td>
-                                @if ($order->status == 'new')
+                                @if ($order->status == 'received')
                                     <span class="badge badge-primary">{{ $order->status }}</span>
                                 @elseif($order->status == 'process')
                                     <span class="badge badge-warning">{{ $order->status }}</span>
@@ -44,7 +44,7 @@
                             </td>
                             <td>
                                 @if (
-                                    $order->status == 'new' ||
+                                    $order->status == 'received' ||
                                         $order->status == 'process' ||
                                         $order->status == 'delivered' ||
                                         $order->status == 'return_request')
