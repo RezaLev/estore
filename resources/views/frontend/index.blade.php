@@ -1,75 +1,77 @@
 @extends('frontend.layouts.master')
 @section('title', 'GriyaBambu || HOME PAGE')
 @section('main-content')
-    <!-- Slider Area -->
-    @if (count($banners) > 0)
-        <section id="Gslider" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                @foreach ($banners as $key => $banner)
-                    <li data-target="#Gslider" data-slide-to="{{ $key }}" class="{{ $key == 0 ? 'active' : '' }}">
-                    </li>
-                @endforeach
+    @guest
+        <!-- Slider Area -->
+        @if (count($banners) > 0)
+            <section id="Gslider" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    @foreach ($banners as $key => $banner)
+                        <li data-target="#Gslider" data-slide-to="{{ $key }}" class="{{ $key == 0 ? 'active' : '' }}">
+                        </li>
+                    @endforeach
 
-            </ol>
-            <div class="carousel-inner" role="listbox">
-                @foreach ($banners as $key => $banner)
-                    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                        <img class="first-slide" src="{{ $banner->photo }}" alt="First slide">
-                        <div class="carousel-caption d-none d-md-block text-left">
-                            <h1 class="wow fadeInDown text-white">{{ $banner->title }}</h1>
-                            <h4 class="text-white">{!! html_entity_decode($banner->description) !!}</h4> <br>
-                            <a class="btn btn-lg ws-btn wow fadeInUpBig" href="{{ route('product-grids') }}"
-                                role="button">Shop Now<i class="far fa-arrow-alt-circle-right"></i></i></a>
+                </ol>
+                <div class="carousel-inner" role="listbox">
+                    @foreach ($banners as $key => $banner)
+                        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                            <img class="first-slide" src="{{ $banner->photo }}" alt="First slide">
+                            <div class="carousel-caption d-none d-md-block text-left">
+                                <h1 class="wow fadeInDown text-white">{{ $banner->title }}</h1>
+                                <h4 class="text-white">{!! html_entity_decode($banner->description) !!}</h4> <br>
+                                <a class="btn btn-lg ws-btn wow fadeInUpBig" href="{{ route('product-grids') }}"
+                                    role="button">Shop Now<i class="far fa-arrow-alt-circle-right"></i></i></a>
+                            </div>
                         </div>
-                    </div>
-                @endforeach
-            </div>
-            <a class="carousel-control-prev" href="#Gslider" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#Gslider" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </section>
-    @endif
+                    @endforeach
+                </div>
+                <a class="carousel-control-prev" href="#Gslider" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#Gslider" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </section>
+        @endif
 
-    <!--/ End Slider Area -->
+        <!--/ End Slider Area -->
 
-    <!-- Start Small Banner  -->
-    <section class="small-banner section">
-        <div class="container-fluid">
-            <div class="row">
-                @php
-                    $category_lists = DB::table('categories')->where('status', 'active')->limit(3)->get();
-                @endphp
-                @if ($category_lists)
-                    @foreach ($category_lists as $cat)
-                        @if ($cat->is_parent == 1)
-                            <!-- Single Banner  -->
-                            <div class="col-lg-4 col-md-6 col-12">
-                                <div class="single-banner">
-                                    @if ($cat->photo)
-                                        <img src="{{ $cat->photo }}" alt="{{ $cat->photo }}">
-                                    @else
-                                        <img src="https://via.placeholder.com/600x370" alt="#">
-                                    @endif
-                                    <div class="content">
-                                        <h2 class="text-white">{{ $cat->title }}</h2>
-                                        <a class="btn btn-lg ws-btn wow fadeInUpBig text-white"
-                                            href="{{ route('product-cat', $cat->slug) }}">Discover Now</a>
+        <!-- Start Small Banner  -->
+        <section class="small-banner section">
+            <div class="container-fluid">
+                <div class="row">
+                    @php
+                        $category_lists = DB::table('categories')->where('status', 'active')->limit(3)->get();
+                    @endphp
+                    @if ($category_lists)
+                        @foreach ($category_lists as $cat)
+                            @if ($cat->is_parent == 1)
+                                <!-- Single Banner  -->
+                                <div class="col-lg-4 col-md-6 col-12">
+                                    <div class="single-banner">
+                                        @if ($cat->photo)
+                                            <img src="{{ $cat->photo }}" alt="{{ $cat->photo }}">
+                                        @else
+                                            <img src="https://via.placeholder.com/600x370" alt="#">
+                                        @endif
+                                        <div class="content">
+                                            <h2 class="text-white">{{ $cat->title }}</h2>
+                                            <a class="btn btn-lg ws-btn wow fadeInUpBig text-white"
+                                                href="{{ route('product-cat', $cat->slug) }}">Discover Now</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endif
-                        <!-- /End Single Banner  -->
-                    @endforeach
-                @endif
+                            @endif
+                            <!-- /End Single Banner  -->
+                        @endforeach
+                    @endif
+                </div>
             </div>
-        </div>
-    </section>
-    <!-- End Small Banner -->
+        </section>
+        <!-- End Small Banner -->
+    @endguest
 
     <!-- Start Product Area -->
     <div class="product-area section">

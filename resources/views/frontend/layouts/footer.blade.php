@@ -195,7 +195,7 @@
 <script>
     	$(() => {
                 setTimeout(() => {
-                    $('.st-show-total').remove()
-                }, 500);
+                    $('#st-2').remove()
+                }, 1000);
             });
 </script>
