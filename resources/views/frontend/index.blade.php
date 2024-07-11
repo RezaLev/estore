@@ -57,7 +57,8 @@
                                     @endif
                                     <div class="content">
                                         <h2 class="text-white">{{ $cat->title }}</h2>
-                                        <a class="btn btn-lg ws-btn wow fadeInUpBig text-white" href="{{ route('product-cat', $cat->slug) }}">Discover Now</a>
+                                        <a class="btn btn-lg ws-btn wow fadeInUpBig text-white"
+                                            href="{{ route('product-cat', $cat->slug) }}">Discover Now</a>
                                     </div>
                                 </div>
                             </div>
@@ -185,7 +186,7 @@
     $featured=DB::table('products')->where('is_featured',1)->where('status','active')->orderBy('id','DESC')->limit(1)->get();
 @endphp --}}
     <!-- Start Midium Banner  -->
-    
+
     <!-- End Midium Banner -->
 
     <!-- Start Most Popular -->
@@ -558,7 +559,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script>
         /*==================================================================
-                                [ Isotope ]*/
+                                            [ Isotope ]*/
         var $topeContainer = $('.isotope-grid');
         var $filter = $('.filter-tope-group');
 
