@@ -165,6 +165,12 @@
                                                     <del
                                                         style="padding-left:4%;">{{ Helper::rupiahFormatter($product->price, 2) }}</del>
                                                 </div>
+                                                <p class="availability">Stock : @if ($product->stock > 0)
+                                                        <span class="badge badge-success">{{ $product->stock }}</span>
+                                                    @else
+                                                        <span class="badge badge-danger">{{ $product->stock }}</span>
+                                                    @endif
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -243,6 +249,12 @@
                                             @endphp
                                             <span>{{ Helper::rupiahFormatter($after_discount, 2) }}</span>
                                         </div>
+                                        <p class="availability">Stock : @if ($product->stock > 0)
+                                            <span class="badge badge-success">{{ $product->stock }}</span>
+                                        @else
+                                            <span class="badge badge-danger">{{ $product->stock }}</span>
+                                        @endif
+                                        </p>
                                     </div>
                                 </div>
                                 <!-- End Single Product -->
@@ -254,63 +266,7 @@
         </div>
     </div>
     <!-- End Most Popular Area -->
-
-    <!-- Start Shop Home List  -->
-    <section class="shop-home-list section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-12">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="shop-section-title">
-                                <h1>Latest Items</h1>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        @php
-                            $product_lists = DB::table('products')
-                                ->where('status', 'active')
-                                ->orderBy('id', 'DESC')
-                                ->limit(6)
-                                ->get();
-                        @endphp
-                        @foreach ($product_lists as $product)
-                            <div class="col-md-4">
-                                <!-- Start Single List  -->
-                                <div class="single-list">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6 col-12">
-                                            <div class="list-image overlay">
-                                                @php
-                                                    $photo = explode(',', $product->photo);
-                                                    // dd($photo);
-                                                @endphp
-                                                <img src="{{ $photo[0] }}" alt="{{ $photo[0] }}">
-                                                <a href="{{ route('add-to-cart', $product->slug) }}" class="buy"><i
-                                                        class="fa fa-shopping-bag"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 col-12 no-padding">
-                                            <div class="content">
-                                                <h4 class="title"><a href="#">{{ $product->title }}</a></h4>
-                                                <p class="price with-discount">
-                                                    {{ Helper::rupiahFormatter($product->discount, 2) }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End Single List  -->
-                            </div>
-                        @endforeach
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
     <!-- End Shop Home List  -->
-
     <!-- Start Shop Services Area -->
     <section class="shop-services section home">
         <div class="container">
@@ -493,10 +449,6 @@
                                                     class="btn min"><i class="ti-heart"></i></a>
                                             </div>
                                         </form>
-                                        <div class="default-social">
-                                            <!-- ShareThis BEGIN -->
-                                            <div class="sharethis-inline-share-buttons"></div><!-- ShareThis END -->
-                                        </div>
                                     </div>
                                 </div>
                             </div>

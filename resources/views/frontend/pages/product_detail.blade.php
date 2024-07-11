@@ -93,33 +93,6 @@
                                     <p class="description">{!! $product_detail->summary !!}</p>
                                 </div>
                                 <!--/ End Description -->
-                                <!-- Color -->
-                                {{-- <div class="color">
-												<h4>Available Options <span>Color</span></h4>
-												<ul>
-													<li><a href="#" class="one"><i class="ti-check"></i></a></li>
-													<li><a href="#" class="two"><i class="ti-check"></i></a></li>
-													<li><a href="#" class="three"><i class="ti-check"></i></a></li>
-													<li><a href="#" class="four"><i class="ti-check"></i></a></li>
-												</ul>
-											</div> --}}
-                                <!--/ End Color -->
-                                <!-- Size -->
-                                @if ($product_detail->size)
-                                    <div class="size mt-4">
-                                        <h4>Size</h4>
-                                        <ul>
-                                            @php
-                                                $sizes = explode(',', $product_detail->size);
-                                                // dd($sizes);
-                                            @endphp
-                                            @foreach ($sizes as $size)
-                                                <li><a href="#" class="one">{{ $size }}</a></li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                @endif
-                                <!--/ End Size -->
                                 <!-- Product Buy -->
                                 <div class="product-buy">
                                     <form action="{{ route('single-add-to-cart') }}" method="POST">

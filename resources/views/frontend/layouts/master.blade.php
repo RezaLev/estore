@@ -23,7 +23,6 @@
     @auth
         @include('frontend.layouts.header')
     @endauth
-
     @guest
         @include('frontend.layouts.guestheader')
     @endguest
