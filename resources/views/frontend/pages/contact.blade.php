@@ -68,6 +68,7 @@
 										<div class="col-12">
 											<div class="form-group button">
 												<button type="submit" class="btn ">Send Message</button>
+												<button type="reset" class="btn btn-outline-secondary">Reset</button>
 											</div>
 										</div>
 									</div>

@@ -4,28 +4,6 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-md-12 col-12">
-                    <!-- Top Left -->
-                    <div class="top-left">
-                        <ul class="list-main">
-                            @php
-                                $settings = DB::table('settings')->get();
-
-                            @endphp
-                            <li><i class="ti-headphone-alt"></i>
-                                @foreach ($settings as $data)
-                                    {{ $data->phone }}
-                                @endforeach
-                            </li>
-                            <li><i class="ti-email"></i>
-                                @foreach ($settings as $data)
-                                    {{ $data->email }}
-                                @endforeach
-                            </li>
-                        </ul>
-                    </div>
-                    <!--/ End Top Left -->
-                </div>
-                <div class="col-lg-6 col-md-12 col-12">
                     <!-- Top Right -->
                     <div class="right-content">
                         <ul class="list-main">
@@ -88,7 +66,7 @@
                     <div class="mobile-nav"></div>
                 </div>
                 <div class="col-lg-8 col-md-7 col-12">
-                    <div class="search-bar-top">
+                    <!-- <div class="search-bar-top">
                         <div class="search-bar">
                             <select>
                                 <option>All Category</option>
@@ -102,7 +80,7 @@
                                 <button class="btnn" type="submit"><i class="ti-search"></i></button>
                             </form>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="col-lg-2 col-md-3 col-12">
                     <div class="right-bar">
@@ -249,10 +227,10 @@
                                                     href="{{ route('product-grids') }}">Products</a><span
                                                     class="new">New</span></li>
                                             {{ Helper::getHeaderCategory() }}
-
+<!-- 
 
                                             <li class="{{ Request::path() == 'contact' ? 'active' : '' }}"><a
-                                                    href="{{ route('contact') }}">Contact Us</a></li>
+                                                    href="{{ route('contact') }}">Contact Us</a></li> -->
                                         </ul>
                                     </div>
                                 </div>

@@ -7,9 +7,6 @@
                 <div class="col-lg-5 col-md-6 col-12">
                     <!-- Single Widget -->
                     <div class="single-footer about">
-                        <!-- <div class="logo">
-        <a href="index.html"><img src="{{ asset('backend/img/logo2.png') }}" alt="#"></a>
-       </div> -->
                         @php
                             $settings = DB::table('settings')->get();
                         @endphp
@@ -76,7 +73,7 @@
                             </ul>
                         </div>
                         <!-- End Single Widget -->
-                        <div class="sharethis-inline-follow-buttons"></div>
+                        <!-- <div class="sharethis-inline-follow-buttons"></div> -->
                     </div>
                     <!-- End Single Widget -->
                 </div>
