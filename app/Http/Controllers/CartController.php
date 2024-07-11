@@ -40,7 +40,9 @@ class CartController extends Controller
             $already_cart->quantity = $already_cart->quantity + (FacadesAuth::user()->role == 'agent' ? 10 : 1);
             $already_cart->amount = $product->price + $already_cart->amount;
             // return $already_cart->quantity;
-            if ($already_cart->product->stock < $already_cart->quantity || $already_cart->product->stock <= 0) return back()->with('error', 'Stock not sufficient!.');
+            if (auth()->user()->role != 'agent') {
+                if ($already_cart->product->stock < $already_cart->quantity || $already_cart->product->stock <= 0) return back()->with('error', 'Stock not sufficient!.');
+            }
             $already_cart->save();
         } else {
 
@@ -50,7 +52,9 @@ class CartController extends Controller
             $cart->price = ($product->price - ($product->price * $product->discount) / 100);
             $cart->quantity = FacadesAuth::user()->role == 'agent' ? 10 : 1;
             $cart->amount = $cart->price * $cart->quantity;
-            if ($cart->product->stock < $cart->quantity || $cart->product->stock <= 0) return back()->with('error', 'Stock not sufficient!.');
+            if (auth()->user()->role != 'agent') {
+                if ($cart->product->stock < $cart->quantity || $cart->product->stock <= 0) return back()->with('error', 'Stock not sufficient!.');
+            }
             $cart->save();
             $wishlist = Wishlist::where('user_id', auth()->user()->id)->where('cart_id', null)->update(['cart_id' => $cart->id]);
         }
@@ -64,12 +68,13 @@ class CartController extends Controller
             'slug'      =>  'required',
             'quant'      =>  'required',
         ]);
-        // dd($request->quant[1]);
 
 
         $product = Product::where('slug', $request->slug)->first();
-        if ($product->stock < $request->quant[1]) {
-            return back()->with('error', 'Out of stock, You can add other products.');
+        if (auth()->user()->role != 'agent') {
+            if ($product->stock < $request->quant[1]) {
+                return back()->with('error', 'Out of stock, You can add other products.');
+            }
         }
         if (($request->quant[1] < 1) || empty($product)) {
             request()->session()->flash('error', 'Invalid Products');
@@ -84,9 +89,9 @@ class CartController extends Controller
             $already_cart->quantity = $already_cart->quantity + $request->quant[1];
             // $already_cart->price = ($product->price * $request->quant[1]) + $already_cart->price ;
             $already_cart->amount = ($product->price * $request->quant[1]) + $already_cart->amount;
-
-            if ($already_cart->product->stock < $already_cart->quantity || $already_cart->product->stock <= 0) return back()->with('error', 'Stock not sufficient!.');
-
+            if (auth()->user()->role != 'agent') {
+                if ($already_cart->product->stock < $already_cart->quantity || $already_cart->product->stock <= 0) return back()->with('error', 'Stock not sufficient!.');
+            }
             $already_cart->save();
         } else {
 
@@ -96,7 +101,9 @@ class CartController extends Controller
             $cart->price = ($product->price - ($product->price * $product->discount) / 100);
             $cart->quantity = $request->quant[1];
             $cart->amount = ($product->price * $request->quant[1]);
-            if ($cart->product->stock < $cart->quantity || $cart->product->stock <= 0) return back()->with('error', 'Stock not sufficient!.');
+            if (auth()->user()->role != 'agent') {
+                if ($cart->product->stock < $cart->quantity || $cart->product->stock <= 0) return back()->with('error', 'Stock not sufficient!.');
+            }
             // return $cart;
             $cart->save();
         }
@@ -132,11 +139,15 @@ class CartController extends Controller
                 if ($quant > 0 && $cart) {
                     // return $quant;
 
-                    if ($cart->product->stock < $quant) {
-                        request()->session()->flash('error', 'Out of stock');
-                        return back();
+                    if (auth()->user()->role != 'agent') {
+                        if ($cart->product->stock < $quant) {
+                            request()->session()->flash('error', 'Out of stock');
+                            return back();
+                        }
+                        $cart->quantity = ($cart->product->stock > $quant) ? $quant  : $cart->product->stock;
+                    } else {
+                        $cart->quantity = $quant;
                     }
-                    $cart->quantity = ($cart->product->stock > $quant) ? $quant  : $cart->product->stock;
                     // return $cart;
 
                     if ($cart->product->stock <= 0) continue;

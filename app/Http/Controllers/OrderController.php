@@ -34,7 +34,7 @@ class OrderController extends Controller
         // Ambil tanggal awal dan akhir dari request atau default ke bulan ini
         $startDate = Carbon::now()->startOfMonth()->toDateString();
         $endDate = Carbon::now()->endOfMonth()->toDateString();
-    
+
         if ($request->has('start_date') && $request->has('end_date')) {
             $startDate = $request->input('start_date');
             $endDate = $request->input('end_date');
@@ -49,8 +49,7 @@ class OrderController extends Controller
         // Ambil daftar status unik dari tabel orders
         $status = Order::select('status')->distinct()->get();
 
-        return view('backend.order.index', compact('orders','status','startDate', 'endDate'));
-         
+        return view('backend.order.index', compact('orders', 'status', 'startDate', 'endDate'));
     }
 
     /**
@@ -124,6 +123,13 @@ class OrderController extends Controller
         // return session('coupon')['value'];
         $order_data['sub_total'] = Helper::totalCartPrice();
         $order_data['quantity'] = Helper::cartCount();
+        if (auth()->user()->role == 'agent') {
+            $order_data['approved_status'] = 0;
+        }
+
+
+
+
         if (session('coupon')) {
             $order_data['coupon'] = session('coupon')['value'];
         }
@@ -249,14 +255,50 @@ class OrderController extends Controller
         $data = $request->all();
         // return $request->status;
         if ($request->status == 'delivered') {
-            foreach ($order->cart as $cart) {
-                $product = $cart->product;
-                // return $product;
-                $product->stock -= $cart->quantity;
-                $product->save();
+            if ($order->approved_status == null) {
+                foreach ($order->cart as $cart) {
+                    $product = $cart->product;
+                    // return $product;
+                    $product->stock -= $cart->quantity;
+                    $product->save();
+                }
             }
         }
         $status = $order->fill($data)->save();
+        if ($status) {
+            request()->session()->flash('success', 'Successfully updated order');
+        } else {
+            request()->session()->flash('error', 'Error while updating order');
+        }
+        return redirect()->route('order.index');
+    }
+
+    public function orderApproved(Request $request, $id)
+    {
+        $order = Order::find($id);
+
+        $status = $order->fill([
+            'approved_status' => 1,
+            'approved_at' => Carbon::now(),
+        ])->save();
+
+        if ($status) {
+            request()->session()->flash('success', 'Successfully updated order');
+        } else {
+            request()->session()->flash('error', 'Error while updating order');
+        }
+        return redirect()->route('order.index');
+    }
+
+    public function orderRejected(Request $request, $id)
+    {
+        $order = Order::find($id);
+
+        $status = $order->fill([
+            'approved_status' => 2,
+            'approved_at' => Carbon::now(),
+        ])->save();
+
         if ($status) {
             request()->session()->flash('success', 'Successfully updated order');
         } else {
@@ -297,27 +339,38 @@ class OrderController extends Controller
     {
         // return $request->all();
         $order = Order::where('user_id', auth()->user()->id)->where('order_number', $request->order_number)->first();
-        if (!empty($order->snap_token)) {
-            request()->session()->flash('snap_token_status', true);
-            request()->session()->flash('snap_token', $order->snap_token);
-        }
+        // if (!empty($order->snap_token)) {
+        //     request()->session()->flash('snap_token_status', true);
+        //     request()->session()->flash('snap_token', $order->snap_token);
+        // }
         if ($order) {
-            if ($order->status == "new") {
-                request()->session()->flash('success', 'Your order has been placed. please wait.');
-            } elseif ($order->status == "process") {
-                request()->session()->flash('success', 'Your order is under processing please wait.');
-            } elseif ($order->status == "delivered") {
-                request()->session()->flash('success', 'Your order is successfully delivered.');
-            } elseif ($order->status == "cancel") {
-                request()->session()->flash('error', 'Your order canceled. please try again');
-            } elseif ($order->status == "return_request") {
-                request()->session()->flash('success', 'Your order return is requested.');
-            } elseif ($order->status == "return_accepted") {
-                request()->session()->flash('success', 'Your order return request is accepted.');
-            } elseif ($order->status == "return_rejected") {
-                request()->session()->flash('success', 'Your order return request is rejected.');
-            } elseif ($order->status == "completed") {
-                request()->session()->flash('success', 'Your order is completed.');
+            switch ($order->approved_status) {
+                case '0':
+                    request()->session()->flash('success', 'Your order has requested for approval.');
+                    break;
+                case null:
+                case '1':
+                    if ($order->status == "new") {
+                        request()->session()->flash('success', 'Your order has been placed. please wait.');
+                    } elseif ($order->status == "process") {
+                        request()->session()->flash('success', 'Your order is under processing please wait.');
+                    } elseif ($order->status == "delivered") {
+                        request()->session()->flash('success', 'Your order is successfully delivered.');
+                    } elseif ($order->status == "cancel") {
+                        request()->session()->flash('error', 'Your order canceled. please try again');
+                    } elseif ($order->status == "return_request") {
+                        request()->session()->flash('success', 'Your order return is requested.');
+                    } elseif ($order->status == "return_accepted") {
+                        request()->session()->flash('success', 'Your order return request is accepted.');
+                    } elseif ($order->status == "return_rejected") {
+                        request()->session()->flash('success', 'Your order return request is rejected.');
+                    } elseif ($order->status == "completed") {
+                        request()->session()->flash('success', 'Your order is completed.');
+                    }
+                    break;
+                case '2':
+                    request()->session()->flash('error', 'Your order has rejected.');
+                    break;
             }
             return redirect()->route('home');
         } else {

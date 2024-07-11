@@ -130,6 +130,8 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function
 
     // Order
     Route::resource('/order', 'OrderController');
+    Route::post('/order/approved/{id}', 'OrderController@orderApproved')->name('order.approved');
+    Route::post('/order/rejected/{id}', 'OrderController@orderRejected')->name('order.rejected');
     // Shipping
     Route::resource('/shipping', 'ShippingController');
     // Coupon
