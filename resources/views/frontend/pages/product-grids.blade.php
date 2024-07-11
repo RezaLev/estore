@@ -66,26 +66,26 @@
                             <!--/ End Single Widget -->
                             <!-- Shop By Price -->
                             <div class="single-widget range">
-                                <h3 class="title">Shop by Price</h3>
-                                <div class="price-filter">
-                                    <div class="price-filter-inner">
-                                        @php
-                                            $max = DB::table('products')->max('price');
-                                            // dd($max);
-                                        @endphp
-                                        <div id="slider-range" data-min="0" data-max="{{ $max }}"></div>
-                                        <div class="product_filter">
-                                            <button type="submit" class="filter_button">Filter</button>
-                                            <div class="label-input">
-                                                <span>Range:</span>
-                                                <input style="" type="text" id="amount" readonly />
-                                                <input type="hidden" name="price_range" id="price_range"
-                                                    value="@if (!empty($_GET['price'])) {{ $_GET['price'] }} @endif" />
-                                            </div>
+                            <h3 class="title">Shop by Price</h3>
+                            <div class="price-filter">
+                                <div class="price-filter-inner">
+                                    @php
+                                        $max = DB::table('products')->max('price');
+                                        $step = 10000;
+                                    @endphp
+                                    <div class="product_filter">
+                                        <div class="label-input">
+                                            <select id="price_range" name="price_range">
+                                                @for ($i = 0; $i <= $max; $i += $step)
+                                                    <option value="{{ $i }}-{{ $i + $step }}">{{ $i }} - {{ $i + $step }}</option>
+                                                @endfor
+                                            </select>
                                         </div>
+                                        <button type="submit" class="filter_button">Filter</button>
                                     </div>
                                 </div>
                             </div>
+                                    </div>
                             <!--/ End Shop By Price -->
                         </div>
                     </div>
@@ -329,8 +329,20 @@
             text-align: center;
             background: #F7941D;
             padding: 8px 16px;
-            margin-top: 10px;
             color: white;
+        }
+        .single-widget.range .product_filter {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .single-widget.range .label-input {
+            margin-bottom: 10px;
+        }
+
+        .single-widget.range .filter_button {
+            align-self: flex-start;
         }
     </style>
 @endpush
@@ -370,34 +382,20 @@
     <script>
         $(document).ready(function() {
             /*----------------------------------------------------*/
-            /*  Jquery Ui slider js
+            /*  Price Range Dropdown Change
             /*----------------------------------------------------*/
-            if ($("#slider-range").length > 0) {
-                const max_value = parseInt($("#slider-range").data('max')) || 500;
-                const min_value = parseInt($("#slider-range").data('min')) || 0;
-                const currency = $("#slider-range").data('currency') || '';
-                let price_range = min_value + '-' + max_value;
-                if ($("#price_range").length > 0 && $("#price_range").val()) {
-                    price_range = $("#price_range").val().trim();
-                }
-
-                let price = price_range.split('-');
-                $("#slider-range").slider({
-                    range: true,
-                    min: min_value,
-                    max: max_value,
-                    values: price,
-                    slide: function(event, ui) {
-                        $("#amount").val(currency + ui.values[0] + " -  " + currency + ui.values[1]);
-                        $("#price_range").val(ui.values[0] + "-" + ui.values[1]);
-                    }
+            if ($("#price_range").length > 0) {
+                const currency = $("#price_range").data('currency') || '';
+                $("#price_range").change(function() {
+                    const selectedRange = $(this).val().split('-');
+                    $("#amount").val(currency + selectedRange[0] + " - " + currency + selectedRange[1]);
                 });
+
+                // Initialize the amount field with the selected value
+                const initialRange = $("#price_range").val().split('-');
+                $("#amount").val(currency + initialRange[0] + " - " + currency + initialRange[1]);
             }
-            if ($("#amount").length > 0) {
-                const m_currency = $("#slider-range").data('currency') || '';
-                $("#amount").val(m_currency + $("#slider-range").slider("values", 0) +
-                    "  -  " + m_currency + $("#slider-range").slider("values", 1));
-            }
-        })
+        });
     </script>
+
 @endpush
