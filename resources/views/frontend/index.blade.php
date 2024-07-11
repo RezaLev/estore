@@ -72,14 +72,13 @@
         </section>
         <!-- End Small Banner -->
     @endguest
-
     <!-- Start Product Area -->
     <div class="product-area section">
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <div class="section-title">
-                        <h2>Trending Item</h2>
+                        <h2>All Products</h2>
                     </div>
                 </div>
             </div>
@@ -584,5 +583,19 @@
             }
             return false
         }
+        function searchProducts() {
+    var query = $('#searchQuery').val().toLowerCase();
+
+    $('.isotope-item').filter(function() {
+        var productName = $(this).find('.product-content h3 a').text().toLowerCase();
+
+        if (productName.includes(query)) {
+            $(this).show();
+        } else {
+            $(this).hide();
+        }
+    });
+}
+
     </script>
 @endpush

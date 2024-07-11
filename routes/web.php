@@ -142,7 +142,9 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function
     Route::get('/notification/{id}', 'NotificationController@show')->name('admin.notification');
     Route::get('/notifications', 'NotificationController@index')->name('all.notification');
     Route::delete('/notification/{id}', 'NotificationController@delete')->name('notification.delete');
-    
+    Route::post('/notification/mark-as-read', 'NotificationController@markAsRead')->name('notification.markAsRead');
+
+
     // Password Change
     Route::get('change-password', 'AdminController@changePassword')->name('change.password.form');
     Route::post('change-password', 'AdminController@changPasswordStore')->name('change.password');
@@ -188,5 +190,7 @@ Route::group(['prefix' => '/user', 'middleware' => ['user']], function () {
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
+Route::post('/messages/mark-as-read', 'MessageController@markAsRead')->name('message.markAsRead');
+
 
 Route::get('/export-pdf', [App\Http\Controllers\PDFController::class, 'exportPDF'])->name('export-pdf');

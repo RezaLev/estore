@@ -9,15 +9,15 @@
             </div>
         </div>
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary float-left">Users List</h6>
-            <select id="roleFilter" class="form-control form-control-sm w-auto float-right" onchange="filterByRole()">
+            <h6 class="m-0 font-weight-bold text-primary float-left">Users List</h6>&nbsp;
+            <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip"
+                data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Add User</a>&nbsp;
+                <select id="roleFilter" class="form-control form-control-sm w-auto float-right" onchange="filterByRole()">
                 <option value="">All Roles</option>
                 <option value="admin">Admin</option>
                 <option value="user">User</option>
                 <option value="agent">Agent</option>
-            </select> 
-            <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip"
-                data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Add User</a>&nbsp;
+            </select>&nbsp;
         </div>
         <div class="card-body">
             <div class="table-responsive">
