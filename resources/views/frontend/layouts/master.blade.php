@@ -21,7 +21,7 @@
     @include('frontend.layouts.notification')
     <!-- Header -->
     @auth
-        @include('frontend.layouts.header')
+        @include('frontend.layouts.header1')
     @endauth
 
     @guest
