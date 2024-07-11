@@ -53,7 +53,8 @@
                                                 <p class="product-des">{!! $cart['summary'] !!}</p>
                                             </td>
                                             <td class="price" data-title="Price">
-                                                <span>{{ Helper::rupiahFormatter($cart['price'], 2) }}</span></td>
+                                                <span>{{ Helper::rupiahFormatter($cart['price'], 2) }}</span>
+                                            </td>
                                             <td class="qty" data-title="Qty"><!-- Input Order -->
                                                 <div class="input-group">
                                                     <div class="button minus">
@@ -64,7 +65,7 @@
                                                         </button>
                                                     </div>
                                                     <input type="text" name="quant[{{ $key }}]"
-                                                        class="input-number" data-min="1" data-max="100"
+                                                        class="input-number" data-min="1" data-max="1000"
                                                         value="{{ $cart->quantity }}">
                                                     <input type="hidden" name="qty_id[]" value="{{ $cart->id }}">
                                                     <div class="button plus">
@@ -81,10 +82,10 @@
                                             </td>
 
                                             <td class="action" data-title="Remove">
-                                            <a href="javascript:void(0);" class="remove" title="Remove this item"
+                                                <a href="javascript:void(0);" class="remove" title="Remove this item"
                                                     onclick="confirmDelete('{{ route('cart-delete', $cart->id) }}');">
                                                     <i class="ti-trash remove-icon"></i>
-                                                </a>    
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -298,7 +299,7 @@
 
         });
     </script>
-      <script>
+    <script>
         function confirmDelete(deleteUrl) {
             Swal.fire({
                 title: 'Are you sure?',

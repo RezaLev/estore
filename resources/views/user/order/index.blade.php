@@ -28,70 +28,69 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <!-- <tfoot>
-                                                                                                    <tr>
-                                                                                                        <th>S.N.</th>
-                                                                                                        <th>Order No.</th>
-                                                                                                        <th>Name</th>
-                                                                                                        <th>Email</th>
-                                                                                                        <th>Quantity</th>
-                                                                                                        <th>Charge</th>
-                                                                                                        <th>Total Amount</th>
-                                                                                                        <th>Status</th>
-                                                                                                        <th>Action</th>
-                                                                                                    </tr>
-                                                                                                </tfoot> -->
-                        <tbody>
-                            @php
-                                $no = 1;
-                            @endphp
-                            @foreach ($orders as $order)
-                                <tr>
-                                    <td>{{ $no++ }}</td>
-                                    <td>{{ $order->order_number }}</td>
-                                    <td>{{ $order->first_name }} {{ $order->last_name }}</td>
-                                    <td>{{ $order->email }}</td>
-                                    <td>{{ $order->quantity }}</td>
-                                    <td>{{ Helper::rupiahFormatter($order->courier_charge) }}</td>
-                                    <td>{{ Helper::rupiahFormatter($order->total_amount, 2) }}</td>
-                                    <td>
-                                        @if ($order->status == 'new')
-                                            <span class="badge badge-primary">{{ $order->status }}</span>
-                                        @elseif($order->status == 'process')
-                                            <span class="badge badge-warning">{{ $order->status }}</span>
-                                        @elseif($order->status == 'delivered' || $order->status == 'completed')
-                                            <span class="badge badge-success">{{ $order->status }}</span>
-                                        @else
-                                            <span class="badge badge-danger">{{ $order->status }}</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('user.order.show', $order->id) }}"
-                                            class="btn btn-warning btn-sm float-left mr-1"
-                                            style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip"
-                                            title="view" data-placement="bottom"><i class="fas fa-eye"></i></a>
-                                        @if ($order->status == 'delivered')
-                                            <form method="POST" action="{{ route('user.order.complete', [$order->id]) }}">
-                                                @csrf
-                                                <button class="btn btn-primary btn-sm" data-id={{ $order->id }}
-                                                    style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip"
-                                                    data-placement="bottom" title="Complete"><i
-                                                        class="fas fa-check"></i></button>
-                                            </form>
-                                        @endif
-                                        @if ($order->status == 'new' || $order->status == 'process')
-                                            <form method="POST" action="{{ route('user.order.delete', [$order->id]) }}">
-                                                @csrf
-                                                @method('delete')
-                                                <button class="btn btn-danger btn-sm dltBtn" data-id={{ $order->id }}
-                                                    style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip"
-                                                    data-placement="bottom" title="Delete"><i
-                                                        class="fas fa-trash-alt"></i></button>
-                                            </form>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
+                        @php
+                            $no = 1;
+                        @endphp
+                        @foreach ($orders as $order)
+                            <tr>
+                                <td>{{ $no++ }}</td>
+                                <td>{{ $order->order_number }}</td>
+                                <td>{{ $order->first_name }} {{ $order->last_name }}</td>
+                                <td>{{ $order->email }}</td>
+                                <td>{{ $order->quantity }}</td>
+                                <td>{{ Helper::rupiahFormatter($order->courier_charge) }}</td>
+                                <td>{{ Helper::rupiahFormatter($order->total_amount, 2) }}</td>
+                                <td>
+                                    @switch($order->approved_status)
+                                        @case('0')
+                                            <span class="badge badge-warning">Menunggu Persetujuan</span>
+                                        @break
+
+                                        @case(null)
+                                        @case('1')
+                                            @if ($order->status == 'new')
+                                                <span class="badge badge-primary">{{ $order->status }}</span>
+                                            @elseif($order->status == 'process')
+                                                <span class="badge badge-warning">{{ $order->status }}</span>
+                                            @elseif($order->status == 'delivered' || $order->status == 'completed')
+                                                <span class="badge badge-success">{{ $order->status }}</span>
+                                            @else
+                                                <span class="badge badge-danger">{{ $order->status }}</span>
+                                            @endif
+                                        @break
+
+                                        @case('2')
+                                            <span class="badge badge-danger">Ditolak</span>
+                                        @break
+                                    @endswitch
+                                </td>
+                                <td>
+                                    <a href="{{ route('user.order.show', $order->id) }}"
+                                        class="btn btn-warning btn-sm float-left mr-1"
+                                        style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip"
+                                        title="view" data-placement="bottom"><i class="fas fa-eye"></i></a>
+                                    @if ($order->status == 'delivered')
+                                        <form method="POST" action="{{ route('user.order.complete', [$order->id]) }}">
+                                            @csrf
+                                            <button class="btn btn-primary btn-sm" data-id={{ $order->id }}
+                                                style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip"
+                                                data-placement="bottom" title="Complete"><i
+                                                    class="fas fa-check"></i></button>
+                                        </form>
+                                    @endif
+                                    @if ($order->status == 'new' || $order->status == 'process')
+                                        <form method="POST" action="{{ route('user.order.delete', [$order->id]) }}">
+                                            @csrf
+                                            @method('delete')
+                                            <button class="btn btn-danger btn-sm dltBtn" data-id={{ $order->id }}
+                                                style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip"
+                                                data-placement="bottom" title="Delete"><i
+                                                    class="fas fa-trash-alt"></i></button>
+                                        </form>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                     <span style="float:right">{{ $orders->links() }}</span>

@@ -114,6 +114,13 @@ class OrderController extends Controller
         // return session('coupon')['value'];
         $order_data['sub_total'] = Helper::totalCartPrice();
         $order_data['quantity'] = Helper::cartCount();
+        if (auth()->user()->role == 'agent') {
+            $order_data['approved_status'] = 0;
+        }
+
+
+
+
         if (session('coupon')) {
             $order_data['coupon'] = session('coupon')['value'];
         }
@@ -239,14 +246,50 @@ class OrderController extends Controller
         $data = $request->all();
         // return $request->status;
         if ($request->status == 'delivered') {
-            foreach ($order->cart as $cart) {
-                $product = $cart->product;
-                // return $product;
-                $product->stock -= $cart->quantity;
-                $product->save();
+            if ($order->approved_status == null) {
+                foreach ($order->cart as $cart) {
+                    $product = $cart->product;
+                    // return $product;
+                    $product->stock -= $cart->quantity;
+                    $product->save();
+                }
             }
         }
         $status = $order->fill($data)->save();
+        if ($status) {
+            request()->session()->flash('success', 'Successfully updated order');
+        } else {
+            request()->session()->flash('error', 'Error while updating order');
+        }
+        return redirect()->route('order.index');
+    }
+
+    public function orderApproved(Request $request, $id)
+    {
+        $order = Order::find($id);
+
+        $status = $order->fill([
+            'approved_status' => 1,
+            'approved_at' => Carbon::now(),
+        ])->save();
+
+        if ($status) {
+            request()->session()->flash('success', 'Successfully updated order');
+        } else {
+            request()->session()->flash('error', 'Error while updating order');
+        }
+        return redirect()->route('order.index');
+    }
+
+    public function orderRejected(Request $request, $id)
+    {
+        $order = Order::find($id);
+
+        $status = $order->fill([
+            'approved_status' => 2,
+            'approved_at' => Carbon::now(),
+        ])->save();
+
         if ($status) {
             request()->session()->flash('success', 'Successfully updated order');
         } else {

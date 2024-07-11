@@ -56,39 +56,75 @@
                                     <td>{{ Carbon::parse($order->created_at)->setTimezone('Asia/Jakarta')->format('Y-m-d H:i:s') }}
                                     </td>
                                     <td>
-                                        @if ($order->status == 'new')
-                                            <span class="badge badge-primary">{{ $order->status }}</span>
-                                        @elseif($order->status == 'process')
-                                            <span class="badge badge-warning">{{ $order->status }}</span>
-                                        @elseif($order->status == 'delivered' || $order->status == 'completed')
-                                            <span class="badge badge-success">{{ $order->status }}</span>
-                                        @else
-                                            <span class="badge badge-danger">{{ $order->status }}</span>
-                                        @endif
+                                        @switch($order->approved_status)
+                                            @case('0')
+                                                <span class="badge badge-warning">Menunggu Persetujuan</span>
+                                            @break
+
+                                            @case(null)
+                                            @case('1')
+                                                @if ($order->status == 'new')
+                                                    <span class="badge badge-primary">{{ $order->status }}</span>
+                                                @elseif($order->status == 'process')
+                                                    <span class="badge badge-warning">{{ $order->status }}</span>
+                                                @elseif($order->status == 'delivered' || $order->status == 'completed')
+                                                    <span class="badge badge-success">{{ $order->status }}</span>
+                                                @else
+                                                    <span class="badge badge-danger">{{ $order->status }}</span>
+                                                @endif
+                                            @break
+
+                                            @case('2')
+                                                <span class="badge badge-danger">Ditolak</span>
+                                            @break
+                                        @endswitch
                                     </td>
                                     <td class="d-flex justify-content-center">
-                                        <a href="{{ route('order.show', $order->id) }}"
-                                            class="btn btn-warning btn-sm float-left mr-1"
+                                        <a href="{{ route('order.show', $order->id) }}" class="btn btn-warning btn-sm mr-1"
                                             style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip"
                                             title="view" data-placement="bottom"><i class="fas fa-eye"></i></a>
-                                        @if (
-                                            $order->status == 'new' ||
-                                                $order->status == 'process' ||
-                                                $order->status == 'delivered' ||
-                                                $order->status == 'return_request')
-                                            <a href="{{ route('order.edit', $order->id) }}"
-                                                class="btn btn-primary btn-sm float-left mr-1"
+                                        @switch($order->approved_status)
+                                            @case('0')
+                                                <form method="POST" action="{{ route('order.approved', [$order->id]) }}">
+                                                    @csrf
+                                                    <button class="btn btn-primary btn-sm mr-1" data-id={{ $order->id }}
+                                                        style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip"
+                                                        data-placement="bottom" title="Complete"><i
+                                                            class="fas fa-check"></i></button>
+                                                </form>
+                                                <form method="POST" action="{{ route('order.rejected', [$order->id]) }}">
+                                                    @csrf
+                                                    <button class="btn btn-danger btn-sm mr-1" data-id={{ $order->id }}
+                                                        style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip"
+                                                        data-placement="bottom" title="Complete"><i
+                                                            class="fas fa-times"></i></button>
+                                                </form>
+                                            @break
+
+                                            @case('1')
+                                                @if (
+                                                    $order->status == 'new' ||
+                                                        $order->status == 'process' ||
+                                                        $order->status == 'delivered' ||
+                                                        $order->status == 'return_request')
+                                                    <a href="{{ route('order.edit', $order->id) }}"
+                                                        class="btn btn-primary btn-sm mr-1"
+                                                        style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip"
+                                                        title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
+                                                @endif
+                                            @break
+                                        @endswitch
+
+                                        <form method="POST" action="{{ route('order.destroy', [$order->id]) }}">
+                                            @csrf
+                                            @method('delete')
+                                            <button class="btn btn-danger btn-sm dltBtn" data-id={{ $order->id }}
                                                 style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip"
-                                                title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
-                                            <form method="POST" action="{{ route('order.destroy', [$order->id]) }}">
-                                                @csrf
-                                                @method('delete')
-                                                <button class="btn btn-danger btn-sm dltBtn" data-id={{ $order->id }}
-                                                    style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip"
-                                                    data-placement="bottom" title="Delete"><i
-                                                        class="fas fa-trash-alt"></i></button>
-                                            </form>
-                                        @endif
+                                                data-placement="bottom" title="Delete"><i
+                                                    class="fas fa-trash-alt"></i></button>
+                                        </form>
+
+
                                     </td>
                                 </tr>
                             @endforeach
