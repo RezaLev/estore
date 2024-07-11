@@ -1,6 +1,6 @@
 <style>
     .logo {
-        height: 40px;
+        height: 50px;
         /* Adjust the height as needed */
     }
 </style>
@@ -33,17 +33,10 @@
                                             </li>
                                             <li class="@if (Request::path() == 'product-grids' || Request::path() == 'product-lists') active @endif">
                                                 <a href="{{ route('product-grids') }}">Products</a>
-                                                <span class="new">New</span>
                                             </li>
-                                            {{ Helper::getHeaderCategory() }}
-                                            <li class="{{ Request::path() == 'contact' ? 'active' : '' }}">
-                                                <a href="{{ route('contact') }}">Contact Us</a>
-                                            </li>
+                                            <!-- {{ Helper::getHeaderCategory() }} -->
                                         </ul>
                                         <ul class="nav navbar-nav ml-auto">
-                                            <li>
-                                                <a href="{{ route('register.form') }}">Register</a>
-                                            </li>
                                             <li>
                                                 <a href="{{ route('login.form') }}">Login</a>
                                             </li>
@@ -58,7 +51,6 @@
             </div>
         </div>
     </div>
-
     <!-- Mobile Navbar -->
     <div class="header-inner d-block d-lg-none">
         <div class="container">
@@ -84,12 +76,6 @@
                             class="nav-item {{ Request::path() == 'product-grids' || Request::path() == 'product-lists' ? 'active' : '' }}">
                             <a class="nav-link text-white" href="{{ route('product-grids') }}">Products</a>
                         </li>
-                        <li class="nav-item {{ Request::path() == 'contact' ? 'active' : '' }}">
-                            <a class="nav-link text-white" href="{{ route('contact') }}">Contact Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="{{ route('register.form') }}">Register</a>
-                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" href="{{ route('login.form') }}">Login</a>
                         </li>
@@ -98,6 +84,5 @@
             </nav>
         </div>
     </div>
-
-
 </header>
+

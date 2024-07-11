@@ -127,9 +127,7 @@
         });
 
         // Sweet alert
-
         function deleteData(id) {
-
         }
     </script>
     <script>

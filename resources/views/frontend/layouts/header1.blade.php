@@ -54,13 +54,16 @@
                                             </li>
                                             <li class="@if (Request::path() == 'product-grids' || Request::path() == 'product-lists') active @endif">
                                                 <a href="{{ route('product-grids') }}">Products</a>
-                                                <span class="new">New</span>
                                             </li>
-                                            {{ Helper::getHeaderCategory() }}
+                                            <!-- {{ Helper::getHeaderCategory() }} -->
                                             <li class="{{ Request::path() == 'about-us' ? 'active' : '' }}">
                                                 <a href="{{ route('about-us') }}">About Us</a>
                                             </li>
                                         </ul>
+                                        <form class="form-inline my-2 my-lg-0" id="searchForm" onsubmit="event.preventDefault(); searchProducts();">
+                                            <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search" id="searchQuery">
+                                            <button class="btn btn-outline-secondary my-2 my-sm-2 btn-sm-2" type="button" onclick="searchProducts()">Search</button>
+                                        </form>
                                         <div class="d-flex">
                                             <div class="right-bar mr-4" style="float: none">
                                                 <!-- Search Form -->

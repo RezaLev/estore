@@ -65,7 +65,7 @@
                     <div class="mobile-nav"></div>
                 </div>
                 <div class="col-lg-8 col-md-7 col-12">
-                    <div class="search-bar-top">
+                    <!-- <div class="search-bar-top">
                         <div class="search-bar">
                             <select>
                                 <option>All Category</option>
@@ -79,7 +79,7 @@
                                 <button class="btnn" type="submit"><i class="ti-search"></i></button>
                             </form>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="col-lg-2 col-md-3 col-12">
                     <div class="right-bar">
@@ -223,13 +223,11 @@
                                             <li class="{{ Request::path() == 'about-us' ? 'active' : '' }}"><a
                                                     href="{{ route('about-us') }}">About Us</a></li>
                                             <li class="@if (Request::path() == 'product-grids' || Request::path() == 'product-lists') active @endif"><a
-                                                    href="{{ route('product-grids') }}">Products</a><span
-                                                    class="new">New</span></li>
+                                                    href="{{ route('product-grids') }}">Products</a></li>
                                             {{ Helper::getHeaderCategory() }}
-
-
+<!-- 
                                             <li class="{{ Request::path() == 'contact' ? 'active' : '' }}"><a
-                                                    href="{{ route('contact') }}">Contact Us</a></li>
+                                                    href="{{ route('contact') }}">Contact Us</a></li> -->
                                         </ul>
                                     </div>
                                 </div>

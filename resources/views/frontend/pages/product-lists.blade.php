@@ -65,7 +65,7 @@
                             </div>
                             <!--/ End Single Widget -->
                             <!-- Shop By Price -->
-                            <div class="single-widget range">
+                            <!-- <div class="single-widget range">
                                 <h3 class="title">Shop by Price</h3>
                                 <div class="price-filter">
                                     <div class="price-filter-inner">
@@ -103,37 +103,9 @@
 											<label class="checkbox-inline" for="3"><input name="news" id="3" type="checkbox">$100 - $250<span class="count">(8)</span></label>
 										</li>
 									</ul> --}}
-                            </div>
+                            </div> -->
                             <!--/ End Shop By Price -->
-                            <!-- Single Widget -->
-                            <div class="single-widget recent-post">
-                                <h3 class="title">Recent post</h3>
-                                {{-- {{dd($recent_products)}} --}}
-                                @foreach ($recent_products as $product)
-                                    <!-- Single Post -->
-                                    @php
-                                        $photo = explode(',', $product->photo);
-                                    @endphp
-                                    <div class="single-post first">
-                                        <div class="image">
-                                            <img src="{{ $photo[0] }}" alt="{{ $photo[0] }}">
-                                        </div>
-                                        <div class="content">
-                                            <h5><a
-                                                    href="{{ route('product-detail', $product->slug) }}">{{ $product->title }}</a>
-                                            </h5>
-                                            @php
-                                                $org = $product->price - ($product->price * $product->discount) / 100;
-                                            @endphp
-                                            <p class="price"><del
-                                                    class="text-muted">{{ Helper::rupiahFormatter($product->price, 2) }}</del>
-                                                {{ Helper::rupiahFormatter($org, 2) }} </p>
-                                        </div>
-                                    </div>
-                                    <!-- End Single Post -->
-                                @endforeach
-                            </div>
-                            <!--/ End Single Widget -->
+                    
                         </div>
                     </div>
                     <div class="col-lg-9 col-md-8 col-12">
