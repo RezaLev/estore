@@ -16,7 +16,6 @@
                             <th>No</th>
                             <th>Order No</th>
                             <th>Name</th>
-                            <th>Email</th>
                             <th>Quantity</th>
                             <th>Charge</th>
                             <th>Total Amount</th>
@@ -29,7 +28,6 @@
                             <td>{{ $order->id }}</td>
                             <td>{{ $order->order_number }}</td>
                             <td>{{ $order->first_name }} {{ $order->last_name }}</td>
-                            <td>{{ $order->email }}</td>
                             <td>{{ $order->quantity }}</td>
                             <td>{{ Helper::rupiahFormatter($order->courier_charge) }}</td>
                             <td>{{ Helper::rupiahFormatter($order->total_amount, 2) }}</td>

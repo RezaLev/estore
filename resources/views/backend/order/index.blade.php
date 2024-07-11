@@ -13,18 +13,26 @@
         </div>
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-primary float-left">Order Lists</h6>
-            
             <div class="d-flex ">
-            <form class="form-inline" id="searchForm">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search by Name" aria-label="Search" id="searchName">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search by address." aria-label="Search" id="searchAdd">
+            <form class="form-inline" id="searchForm" onsubmit="event.preventDefault(); searchOrders();">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="searchQuery">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="searchOrders()">Search</button>
             </form> &nbsp;
+            <form id="filter-form" method="GET" action="{{ route('order.index') }}">
+                    <select name="order" id="order" class="form-control" onchange="this.form.submit()">
+                        <option value="all">All Status</option>
+                        @foreach ($status as $stat)
+                            <option value="{{ $stat->status }}"
+                                {{ request('order') == $stat->status ? 'selected' : '' }}>{{ $stat->status }}
+                            </option>
+                        @endforeach
+                    </select>
+            </form>&nbsp;
                 <form id="filter-form" class="form-inline" method="GET" action="{{ route('order.index') }}">
-                    <input type="text" id="datefilter" class="form-control mr-3" name="datefilter" />
-                    <input type="hidden" id="start_date" name="start_date">
-                    <input type="hidden" id="end_date" name="end_date">
-                </form>
+                    <input type="date" class="form-control" id="start_date" name="start_date" value="{{ $startDate }}">
+                    <input type="date" class="form-control" id="end_date" name="end_date" value="{{ $endDate }}">&nbsp;
+                    <button type="submit" class="btn btn-secondary">Filter</button>
+                </form>&nbsp;
                 <a href="/export-pdf" target="_blank" class="btn btn-primary btn-sm d-flex align-items-center"
                     style="text-wrap:nowrap">Export Pdf</a>
             </div>
@@ -121,42 +129,20 @@
 
     <!-- Page level custom scripts -->
     <script>
-        $('#datefilter').daterangepicker({
-            autoApply: true,
-            locale: {
-                format: 'DD/MM/YYYY',
-            },
-            startDate: moment('{{ $startDate }}').startOf('month').format('DD/MM/YYYY'),
-            endDate: moment('{{ $endDate }}').endOf('month').format('DD/MM/YYYY')
-        }, function(start, end, label) {
-            $('#start_date').val(start.format('YYYY-MM-DD'));
-            $('#end_date').val(end.format('YYYY-MM-DD'));
-
-            $('#filter-form').submit()
-        });
-
-        $('#order-dataTable').DataTable({
-            "columnDefs": [{
-                "orderable": false,
-                "targets": [8]
-            }]
-        });
-
         function searchOrders() {
-        var name = $('#searchName').val().toLowerCase();
-        var address = $('#searchAdd').val().toLowerCase();
+        var query = $('#searchQuery').val().toLowerCase();
 
         $('#order-dataTable tbody tr').filter(function() {
             var rowName = $(this).find('td:nth-child(3)').text().toLowerCase();
             var rowAddress = $(this).find('td:nth-child(4)').text().toLowerCase();
 
-            if ((name === '' || rowName.includes(name)) && (address === '' || rowAddress.includes(address))) {
+            if (rowName.includes(query) || rowAddress.includes(query)) {
                 $(this).show();
             } else {
                 $(this).hide();
             }
         });
-    }
+        }
         // Sweet alert
 
         function deleteData(id) {
@@ -192,4 +178,5 @@
             })
         })
     </script>
+    
 @endpush

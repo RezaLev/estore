@@ -30,17 +30,27 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $query = Order::orderBy('id', 'DESC');
+
+        // Ambil tanggal awal dan akhir dari request atau default ke bulan ini
         $startDate = Carbon::now()->startOfMonth()->toDateString();
         $endDate = Carbon::now()->endOfMonth()->toDateString();
-
+    
         if ($request->has('start_date') && $request->has('end_date')) {
             $startDate = $request->input('start_date');
             $endDate = $request->input('end_date');
         }
+        if ($request->has('order') && $request->order != 'all') {
+            $query->where('status', $request->order);
+        }
+        // Filter berdasarkan rentang tanggal
         $query->whereBetween('created_at', [$startDate, $endDate]);
-
+        // Paginasi data order
         $orders = $query->paginate(10);
-        return view('backend.order.index')->with('orders', $orders)->with('startDate', $startDate)->with('endDate', $endDate);
+        // Ambil daftar status unik dari tabel orders
+        $status = Order::select('status')->distinct()->get();
+
+        return view('backend.order.index', compact('orders','status','startDate', 'endDate'));
+         
     }
 
     /**
@@ -355,11 +365,24 @@ class OrderController extends Controller
     // PDF generate
     public function pdf(Request $request)
     {
+        // Mengambil order berdasarkan id atau sejenisnya (sesuaikan dengan logika aplikasi Anda)
         $order = Order::getAllOrder($request->id);
-        // return $order;
+
+        // Filter berdasarkan tanggal jika ada request 'start_date' dan 'end_date'
+        $query = Order::query(); // Inisialisasi query builder untuk model Order
+        if ($request->has('start_date') && $request->has('end_date')) {
+            $startDate = $request->input('start_date');
+            $endDate = $request->input('end_date');
+            $query->whereBetween('created_at', [$startDate, $endDate]);
+        }
+
+        // Ambil data order yang sesuai dengan filter
+        $orders = $query->get();
+        // Generate nama file PDF berdasarkan detail order
         $file_name = $order->order_number . '-' . $order->first_name . '.pdf';
-        // return $file_name;
-        $pdf = FacadePdf::loadview('backend.order.pdf', compact('order'));
+        // Load view PDF menggunakan library PDF (misalnya, dompdf)
+        $pdf = PDF::loadView('backend.order.pdf', compact('order', 'orders'));
+        // Mengembalikan PDF untuk diunduh dengan nama file yang telah dibuat
         return $pdf->download($file_name);
     }
     // Income chart
