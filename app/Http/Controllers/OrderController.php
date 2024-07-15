@@ -123,9 +123,6 @@ class OrderController extends Controller
         // return session('coupon')['value'];
         $order_data['sub_total'] = Helper::totalCartPrice();
         $order_data['quantity'] = Helper::cartCount();
-        if (auth()->user()->role == 'agent') {
-            $order_data['approved_status'] = 0;
-        }
 
 
 
@@ -179,14 +176,18 @@ class OrderController extends Controller
         $tempItem =
             DB::table('carts')
             ->join('products', 'carts.product_id', '=', 'products.id')
-            ->select('carts.id', 'carts.price', 'carts.quantity', 'carts.order_id', 'carts.user_id', 'products.title as name')
+            ->select('carts.id', 'carts.price', 'carts.quantity', 'carts.order_id', 'carts.user_id', 'products.title as name', 'products.stock as stock')
             ->where('user_id', auth()->user()->id)
             ->where('order_id', $order->id)
             ->get()->toArray();
 
 
         $items = [];
+        $hasPo = 0;
         foreach ($tempItem as $key => $value) {
+            if ($value->stock < $value->quantity) {
+                $hasPo = 1;
+            }
             $items[] = (array) $value;
         }
 
@@ -202,6 +203,12 @@ class OrderController extends Controller
         $snapToken = $midtrans->getSnapToken();
         if (!empty($snapToken)) {
             Order::where('id', $order->id)->update(['snap_token' => $snapToken]);
+        }
+        if ($hasPo == 1) {
+            Order::where('id', $order->id)->update([
+                'has_po' => 1,
+                'approved_status' => 0
+            ]);
         }
 
 
