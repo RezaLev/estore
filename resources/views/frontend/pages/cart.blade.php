@@ -49,7 +49,16 @@
                                             <td class="product-des" data-title="Description">
                                                 <p class="product-name"><a
                                                         href="{{ route('product-detail', $cart->product['slug']) }}"
-                                                        target="_blank">{{ $cart->product['title'] }}</a></p>
+                                                        target="_blank">{{ $cart->product['title'] }}
+                                                        @if (auth()->check() && auth()->user()->role == 'agent')
+                                                            <span class="badge badge-info"
+                                                                id="preorderLabel{{ $cart->product->id }}"
+                                                                @if ($cart->product->stock >= 10) style="display:none" @endif>Pre
+                                                                -
+                                                                Order 7Hari</span>
+                                                        @endif
+
+                                                    </a></p>
                                                 <p class="product-des">{!! $cart['summary'] !!}</p>
                                             </td>
                                             <td class="price" data-title="Price">
@@ -66,7 +75,9 @@
                                                     </div>
                                                     <input type="text" name="quant[{{ $key }}]"
                                                         class="input-number" data-min="1" data-max="1000"
-                                                        value="{{ $cart->quantity }}">
+                                                        id="quantity{{ $cart->product->id }}"
+                                                        value="{{ $cart->quantity }}"
+                                                        @if (auth()->check() && auth()->user()->role == 'agent') onchange="checkQuantity('{{ $cart->product->stock }}', '{{ $cart->product->id }}')" @endif>
                                                     <input type="hidden" name="qty_id[]" value="{{ $cart->id }}">
                                                     <div class="button plus">
                                                         <button type="button" class="btn btn-primary btn-number"
@@ -316,4 +327,17 @@
             });
         }
     </script>
+
+    @if (auth()->check() && auth()->user()->role == 'agent')
+        <script>
+            checkQuantity = (max, id) => {
+                let quantity = $('#quantity' + id).val();
+                if (quantity > max) {
+                    $('#preorderLabel' + id).show();
+                } else {
+                    $('#preorderLabel' + id).hide();
+                }
+            }
+        </script>
+    @endif
 @endpush

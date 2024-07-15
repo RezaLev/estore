@@ -111,7 +111,8 @@
                                                 <input type="text" name="quant[1]" class="input-number" data-min="1"
                                                     data-max="1000"
                                                     value="{{ Auth::check() && Auth::user()->role == 'agent' ? 10 : 1 }}"
-                                                    id="quantity">
+                                                    id="quantity"
+                                                    @if (auth()->check() && auth()->user()->role == 'agent') onchange="checkQuantity('{{ $product_detail->stock }}')" @endif>
                                                 <div class="button plus">
                                                     <button type="button" class="btn btn-primary btn-number"
                                                         data-type="plus" data-field="quant[1]">
@@ -141,6 +142,12 @@
                                         @else
                                             <span class="badge badge-danger">{{ $product_detail->stock }}</span>
                                         @endif
+                                        @if (auth()->check() && auth()->user()->role == 'agent')
+                                            <span class="badge badge-info" id="preorderLabel"
+                                                @if ($product_detail->stock >= 10) style="display:none" @endif>Pre -
+                                                Order 7Hari</span>
+                                        @endif
+
                                     </p>
                                 </div>
                                 <!--/ End Product Buy -->
@@ -572,6 +579,19 @@
 @endpush
 @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+    @if (auth()->check() && auth()->user()->role == 'agent')
+        <script>
+            checkQuantity = (max) => {
+                let quantity = $('#quantity').val();
+                if (quantity > max) {
+                    $('#preorderLabel').show();
+                } else {
+                    $('#preorderLabel').hide();
+                }
+            }
+        </script>
+    @endif
 
     {{-- <script>
         $('.cart').click(function(){
