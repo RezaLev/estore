@@ -146,8 +146,8 @@
 @stack('scripts')
 <script>
     // setTimeout(function() {
-    //     $('.alert').slideUp();
-    // }, 5000);
+    //      $('.alert').slideUp();
+    //  }, 5000);
     $(function() {
         // ------------------------------------------------------- //
         // Multi Level dropdowns
