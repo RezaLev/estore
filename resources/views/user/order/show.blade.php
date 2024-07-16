@@ -6,10 +6,10 @@
 
 @section('main-content')
     <div class="card">
-        <h5 class="card-header">Order 
+        <h5 class="card-header">Order
             <!-- <a href="{{ route('order.pdf', $order->id) }}"
-                class=" btn btn-sm btn-primary shadow-sm float-right"><i class="fas fa-download fa-sm text-white-50"></i>
-                Generate PDF</a> -->
+                    class=" btn btn-sm btn-primary shadow-sm float-right"><i class="fas fa-download fa-sm text-white-50"></i>
+                    Generate PDF</a> -->
         </h5>
         <div class="card-body">
             @if ($order)
@@ -37,29 +37,29 @@
                             <td>{{ Helper::rupiahFormatter($order->courier_charge) }}</td>
                             <td>{{ Helper::rupiahFormatter($order->total_amount, 2) }}</td>
                             <td>
-                                    @switch($order->approved_status)
-                                        @case('0')
-                                            <span class="badge badge-warning">waiting approval</span>
-                                        @break
+                                @switch($order->approved_status)
+                                    @case('0')
+                                        <span class="badge badge-warning">waiting approval</span>
+                                    @break
 
-                                        @case(null)
-                                        @case('1')
-                                            @if ($order->status == 'received')
-                                                <span class="badge badge-primary">{{ $order->status }}</span>
-                                            @elseif($order->status == 'process')
-                                                <span class="badge badge-warning">{{ $order->status }}</span>
-                                            @elseif($order->status == 'delivered' || $order->status == 'completed')
-                                                <span class="badge badge-success">{{ $order->status }}</span>
-                                            @else
-                                                <span class="badge badge-danger">{{ $order->status }}</span>
-                                            @endif
-                                        @break
+                                    @case(null)
+                                    @case('1')
+                                        @if ($order->status == 'received')
+                                            <span class="badge badge-primary">{{ $order->status }}</span>
+                                        @elseif($order->status == 'process')
+                                            <span class="badge badge-warning">{{ $order->status }}</span>
+                                        @elseif($order->status == 'delivered' || $order->status == 'completed')
+                                            <span class="badge badge-success">{{ $order->status }}</span>
+                                        @else
+                                            <span class="badge badge-danger">{{ $order->status }}</span>
+                                        @endif
+                                    @break
 
-                                        @case('2')
-                                            <span class="badge badge-danger">reject</span>
-                                        @break
-                                    @endswitch
-                                </td>
+                                    @case('2')
+                                        <span class="badge badge-danger">reject</span>
+                                    @break
+                                @endswitch
+                            </td>
                             <td>
                                 @if ($order->status == 'received' || $order->status == 'process')
                                     <form method="POST" action="{{ route('order.destroy', [$order->id]) }}">
@@ -107,6 +107,30 @@
                                             <td>Coupon</td>
                                             <td> : {{ Helper::rupiahFormatter($order->coupon, 2) }}</td>
                                         </tr>
+
+
+                                        @if ($order->has_custom_name == 1)
+                                            <tr>
+                                                <td>Kustom Nama</td>
+                                                <td> : {{ $order->custom_name ?? '-' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Biaya Kustom Nama</td>
+                                                <td> : {{ Helper::rupiahFormatter($order->custom_name_price, 2) }}</td>
+                                            </tr>
+                                        @endif
+
+                                        @if ($order->has_custom_tag == 1)
+                                            <tr>
+                                                <td>Kustom tag</td>
+                                                <td> : {{ $order->custom_tag ?? '-' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Biaya Kustom Tag</td>
+                                                <td> : {{ Helper::rupiahFormatter($order->custom_tag_price, 2) }}</td>
+                                            </tr>
+                                        @endif
+
                                         <tr>
                                             <td>Total Amount</td>
                                             <td> : {{ Helper::rupiahFormatter($order->total_amount, 2) }}</td>

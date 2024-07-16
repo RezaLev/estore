@@ -70,8 +70,8 @@
                             <select>
                                 <option>All Category</option>
                                 @foreach (Helper::getAllCategory() as $cat)
-                                    <option>{{ $cat->title }}</option>
-                                @endforeach
+<option>{{ $cat->title }}</option>
+@endforeach
                             </select>
                             <form method="POST" action="{{ route('product.search') }}">
                                 @csrf
@@ -192,8 +192,8 @@
                                     <div class="bottom">
                                         <div class="total">
                                             <span>Total</span>
-                                            <span
-                                                class="total-amount">{{ Helper::rupiahFormatter(Helper::totalCartPrice(), 2) }}</span>
+                                            <span class="total-amount"
+                                                id="totalCart">{{ Helper::rupiahFormatter(Helper::totalCartPrice(), 2) }}</span>
                                         </div>
                                         <a href="{{ route('checkout') }}" class="btn animate">Checkout</a>
                                     </div>
@@ -225,7 +225,7 @@
                                             <li class="@if (Request::path() == 'product-grids' || Request::path() == 'product-lists') active @endif"><a
                                                     href="{{ route('product-grids') }}">Products</a></li>
                                             {{ Helper::getHeaderCategory() }}
-<!-- 
+                                            <!--
                                             <li class="{{ Request::path() == 'contact' ? 'active' : '' }}"><a
                                                     href="{{ route('contact') }}">Contact Us</a></li> -->
                                         </ul>

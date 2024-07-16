@@ -123,6 +123,13 @@ class OrderController extends Controller
         // return session('coupon')['value'];
         $order_data['sub_total'] = Helper::totalCartPrice();
         $order_data['quantity'] = Helper::cartCount();
+        $order_data['has_custom_name'] = $request->has('custom_name') ? 1 : 0;
+        $order_data['custom_name'] = $request->custom_name;
+        $order_data['custom_name_price'] = $request->custom_name_price;
+        $order_data['has_custom_tag'] = $request->has('custom_tag') ? 1 : 0;
+        $order_data['custom_tag'] = $request->custom_tag;
+        $order_data['custom_tag_price'] = $request->custom_tag_price;
+
 
 
 

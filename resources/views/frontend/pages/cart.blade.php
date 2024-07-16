@@ -101,11 +101,125 @@
                                         </tr>
                                     @endforeach
                                     <track>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td colspan="5">
+                                        <div class="d-flex justify-content-between my-2">
+                                            <div class="d-flex m-0">
+                                                <input type="checkbox" name="has_custom_name" id="has_custom_name"
+                                                    class="form-check mr-2" onclick="toggleCustom()">
+                                                <label for="has_custom_name" class="text-nowrap">Kustom Nama (+
+                                                    Rp.25.000)</label>
+                                                <input type="hidden" name="custom_name_price" id="custom_name_price"
+                                                    value="25000" disabled>
+                                            </div>
+                                            <input type="text" name="custom_name" id="custom_name"
+                                                class="form-control ml-2 w-75" disabled
+                                                oninput="localStorage.setItem('custom_name', this.value)">
+                                        </div>
+                                        <div class="d-flex justify-content-between my-2">
+                                            <div class="d-flex m-0">
+                                                <input type="checkbox" name="has_custom_tag" id="has_custom_tag"
+                                                    class="form-check mr-2" onclick="toggleCustom()">
+                                                <label for="has_custom_tag" class="text-nowrap">Kustom Tag (+
+                                                    Rp.15.000)</label>
+                                                <input type="hidden" name="custom_tag_price" id="custom_tag_price"
+                                                    value="15000" disabled>
+                                            </div>
+                                            <input type="text" name="custom_tag" id="custom_tag"
+                                                class="form-control ml-2 w-75" disabled
+                                                oninput="localStorage.setItem('custom_tag', this.value)">
+                                        </div>
+
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                var has_custom_name = localStorage.getItem('has_custom_name');
+                                                var custom_name_price = localStorage.getItem('custom_name_price');
+                                                var custom_name = localStorage.getItem('custom_name');
+
+                                                var additional = 0
+                                                if (has_custom_name == 'true') {
+                                                    $('#custom_name_cart_container').show();
+                                                    document.getElementById('has_custom_name').checked = true;
+                                                    document.getElementById('custom_name_price').value = custom_name_price;
+                                                    document.getElementById('custom_name').value = custom_name;
+                                                    document.getElementById('custom_name').disabled = false;
+                                                    document.getElementById('custom_name_price').disabled = false;
+                                                    additional = additional + parseInt(custom_name_price);
+                                                }
+
+                                                var has_custom_tag = localStorage.getItem('has_custom_tag');
+                                                var custom_tag_price = localStorage.getItem('custom_tag_price');
+                                                var custom_tag = localStorage.getItem('custom_tag');
+                                                if (has_custom_tag == 'true') {
+                                                    $('#custom_tag_cart_container').show();
+                                                    document.getElementById('has_custom_tag').checked = true;
+                                                    document.getElementById('custom_tag_price').value = custom_tag_price;
+                                                    document.getElementById('custom_tag').value = custom_tag;
+                                                    document.getElementById('custom_tag').disabled = false;
+                                                    document.getElementById('custom_tag_price').disabled = false;
+                                                    additional = additional + parseInt(custom_tag_price);
+                                                }
+
+                                                let cost = parseFloat($('[name=shipping]').find('option:selected').data('price')) || 0;
+                                                let subtotal = parseFloat($('.order_subtotal').data('price'));
+                                                let coupon = parseFloat($('.coupon_price').data('price')) || 0;
+                                                // alert(coupon);
+                                                $('#order_total_price span').text(rupiahFormat(subtotal + cost - coupon + additional));
+                                            })
+
+                                            function toggleCustom() {
+                                                var custom_name = document.getElementById('has_custom_name');
+                                                var custom_name_price = document.getElementById('custom_name_price');
+                                                var custom_name_input = document.getElementById('custom_name');
+                                                var additional = 0
+                                                if (custom_name.checked) {
+                                                    additional = additional + parseInt(custom_name_price.value);
+                                                    custom_name_price.disabled = false;
+                                                    custom_name_input.disabled = false;
+                                                    localStorage.setItem('has_custom_name', custom_name.checked);
+                                                    localStorage.setItem('custom_name_price', custom_name_price.value);
+                                                    $('#custom_name_cart_container').show();
+                                                } else {
+                                                    $('#custom_name_cart_container').hide();
+                                                    custom_name_price.disabled = true;
+                                                    custom_name_input.disabled = true;
+                                                    localStorage.removeItem('has_custom_name');
+                                                    localStorage.removeItem('custom_name_price');
+                                                    localStorage.removeItem('custom_name');
+                                                    custom_name_input.value = '';
+                                                }
+
+
+                                                var custom_tag = document.getElementById('has_custom_tag');
+                                                var custom_tag_price = document.getElementById('custom_tag_price');
+                                                var custom_tag_input = document.getElementById('custom_tag');
+                                                if (custom_tag.checked) {
+                                                    additional = additional + parseInt(custom_tag_price.value);
+                                                    custom_tag_price.disabled = false;
+                                                    custom_tag_input.disabled = false;
+                                                    localStorage.setItem('has_custom_tag', custom_tag.checked);
+                                                    localStorage.setItem('custom_tag_price', custom_tag_price.value);
+                                                    $('#custom_tag_cart_container').show();
+                                                } else {
+                                                    $('#custom_tag_cart_container').hide();
+                                                    custom_tag_price.disabled = true;
+                                                    custom_tag_input.disabled = true;
+                                                    localStorage.removeItem('has_custom_tag');
+                                                    localStorage.removeItem('custom_tag_price');
+                                                    localStorage.removeItem('custom_tag');
+                                                    custom_tag_input.value = '';
+                                                }
+
+                                                let cost = parseFloat($(this).find('option:selected').data('price')) || 0;
+                                                let subtotal = parseFloat($('.order_subtotal').data('price'));
+                                                let coupon = parseFloat($('.coupon_price').data('price')) || 0;
+                                                // alert(coupon);
+                                                $('#order_total_price span').text(rupiahFormat(subtotal + cost - coupon + additional));
+
+
+                                            }
+                                        </script>
+
+                                    </td>
                                     <td class="float-right">
                                         <button class="btn float-right" type="submit">Update</button>
                                     </td>
@@ -151,12 +265,24 @@
                             <div class="col-lg-4 col-md-7 col-12">
                                 <div class="right">
                                     <ul>
-                                        <li class="order_subtotal" data-price="{{ Helper::totalCartPrice() }}">Cart
-                                            Subtotal<span>{{ Helper::rupiahFormatter(Helper::totalCartPrice(), 2) }}</span>
+                                        <li class="order_subtotal" data-price="{{ Helper::totalCartPrice() }}">
+                                            Cart Subtotal
+                                            <span>{{ Helper::rupiahFormatter(Helper::totalCartPrice(), 2) }}</span>
+                                        </li>
+
+                                        <li id="custom_name_cart_container" style="display:none">
+                                            Kustom Nama
+                                            <span>Rp 25.000</span>
+                                        </li>
+
+                                        <li id="custom_tag_cart_container" style="display:none">
+                                            Kustom Tag
+                                            <span>Rp 15.000</span>
                                         </li>
 
                                         @if (session()->has('coupon'))
-                                            <li class="coupon_price" data-price="{{ Session::get('coupon')['value'] }}">You
+                                            <li class="coupon_price" data-price="{{ Session::get('coupon')['value'] }}">
+                                                You
                                                 Save<span>{{ Helper::rupiahFormatter(Session::get('coupon')['value'], 2) }}</span>
                                             </li>
                                         @endif
@@ -305,7 +431,7 @@
                 let subtotal = parseFloat($('.order_subtotal').data('price'));
                 let coupon = parseFloat($('.coupon_price').data('price')) || 0;
                 // alert(coupon);
-                $('#order_total_price span').text('$' + (subtotal + cost - coupon).toFixed(2));
+                $('#order_total_price span').text(rupiahFormat(subtotal + cost - coupon));
             });
 
         });
@@ -325,6 +451,14 @@
                     window.location.href = deleteUrl;
                 }
             });
+        }
+
+        rupiahFormat = (rupiah) => {
+            return new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                minimumFractionDigits: 0
+            }).format(rupiah);
         }
     </script>
 

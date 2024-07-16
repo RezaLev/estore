@@ -60,9 +60,12 @@
                                                 <a href="{{ route('about-us') }}">About Us</a>
                                             </li>
                                         </ul>
-                                        <form class="form-inline my-2 my-lg-0" id="searchForm" onsubmit="event.preventDefault(); searchProducts();">
-                                            <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search" id="searchQuery">
-                                            <button class="btn btn-outline-secondary my-2 my-sm-2 btn-sm-2" type="button" onclick="searchProducts()">Search</button>
+                                        <form class="form-inline my-2 my-lg-0" id="searchForm"
+                                            onsubmit="event.preventDefault(); searchProducts();">
+                                            <input class="form-control mr-2" type="search" placeholder="Search"
+                                                aria-label="Search" id="searchQuery">
+                                            <button class="btn btn-outline-secondary my-2 my-sm-2 btn-sm-2"
+                                                type="button" onclick="searchProducts()">Search</button>
                                         </form>
                                         <div class="d-flex">
                                             <div class="right-bar mr-4" style="float: none">
@@ -182,7 +185,7 @@
                                                             <div class="total">
                                                                 <span>Total</span>
                                                                 <span
-                                                                    class="total-amount">{{ Helper::rupiahFormatter(Helper::totalCartPrice(), 2) }}</span>
+                                                                    class="total-amount totalCart">{{ Helper::rupiahFormatter(Helper::totalCartPrice(), 2) }}</span>
                                                             </div>
                                                             <a href="{{ route('checkout') }}"
                                                                 class="btn animate">Checkout</a>
@@ -343,7 +346,7 @@
                                 <div class="total">
                                     <span>Total</span>
                                     <span
-                                        class="total-amount">{{ Helper::rupiahFormatter(Helper::totalCartPrice(), 2) }}</span>
+                                        class="total-amount totalCart">{{ Helper::rupiahFormatter(Helper::totalCartPrice(), 2) }}</span>
                                 </div>
                                 <a href="{{ route('checkout') }}" class="btn animate">Checkout</a>
                             </div>
@@ -399,3 +402,27 @@
     </div>
 </header>
 
+<script>
+    rupiahFormat = (rupiah) => {
+        return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            minimumFractionDigits: 0
+        }).format(rupiah);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var additional = 0
+        if (localStorage.getItem('has_custom_name') == 'true') {
+            $('#custom_name_cart_container').show();
+            additional = additional + parseInt(localStorage.getItem('custom_name_price'));
+        }
+
+        if (localStorage.getItem('has_custom_tag') == 'true') {
+            $('#custom_tag_cart_container').show();
+            additional = additional + parseInt(localStorage.getItem('custom_tag_price'));
+        }
+
+        $('.totalCart').text(rupiahFormat({{ Helper::totalCartPrice() }} + additional));
+    })
+</script>

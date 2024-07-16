@@ -97,6 +97,29 @@
                                             <td>Coupon</td>
                                             <td> : {{ Helper::rupiahFormatter($order->coupon, 2) }}</td>
                                         </tr>
+
+                                        @if ($order->has_custom_name == 1)
+                                            <tr>
+                                                <td>Kustom Nama</td>
+                                                <td> : {{ $order->custom_name ?? '-' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Biaya Kustom Nama</td>
+                                                <td> : {{ Helper::rupiahFormatter($order->custom_name_price, 2) }}</td>
+                                            </tr>
+                                        @endif
+
+                                        @if ($order->has_custom_tag == 1)
+                                            <tr>
+                                                <td>Kustom tag</td>
+                                                <td> : {{ $order->custom_tag ?? '-' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Biaya Kustom Tag</td>
+                                                <td> : {{ Helper::rupiahFormatter($order->custom_tag_price, 2) }}</td>
+                                            </tr>
+                                        @endif
+
                                         <tr>
                                             <td>Total Amount</td>
                                             <td> : {{ Helper::rupiahFormatter($order->total_amount, 2) }}</td>
