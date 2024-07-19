@@ -76,7 +76,7 @@
                                                     <input type="text" name="quant[{{ $key }}]"
                                                         class="input-number" data-min="1" data-max="1000"
                                                         id="quantity{{ $cart->product->id }}"
-                                                        value="{{ $cart->quantity }}"
+                                                        value="{{ $cart->quantity }}" oninput="updateCustomPrices(); updateTotalPrice();"
                                                         @if (auth()->check() && auth()->user()->role == 'agent') onchange="checkQuantity('{{ $cart->product->stock }}', '{{ $cart->product->id }}')" @endif>
                                                     <input type="hidden" name="qty_id[]" value="{{ $cart->id }}">
                                                     <div class="button plus">
@@ -171,7 +171,18 @@
                                                 var custom_name_price = document.getElementById('custom_name_price');
                                                 var custom_name_input = document.getElementById('custom_name');
                                                 var additional = 0
+                                                var quantity = parseInt(document.getElementById('quantity{{ $cart->product->id }}').value);
                                                 if (custom_name.checked) {
+                                                    if (quantity >= 50) {
+                                                        custom_name_price.value = 23000;
+                                                    } else {
+                                                        custom_name_price.value = 25000;
+                                                    }
+                                                     
+                                                    // Tambahkan kondisi untuk biaya kustom per produk jika jumlah pembelian kurang dari 10
+                                                    if (quantity < 10) {
+                                                        custom_name_price.value = quantity * 1500;
+                                                    }
                                                     additional = additional + parseInt(custom_name_price.value);
                                                     custom_name_price.disabled = false;
                                                     custom_name_input.disabled = false;
@@ -187,12 +198,19 @@
                                                     localStorage.removeItem('custom_name');
                                                     custom_name_input.value = '';
                                                 }
-
-
                                                 var custom_tag = document.getElementById('has_custom_tag');
                                                 var custom_tag_price = document.getElementById('custom_tag_price');
                                                 var custom_tag_input = document.getElementById('custom_tag');
                                                 if (custom_tag.checked) {
+                                                    if (quantity >= 50) {
+                                                        custom_tag_price.value = 13000;
+                                                    } else {
+                                                        custom_tag_price.value = 15000;
+                                                    }
+                                                    // Tambahkan kondisi untuk biaya kustom per produk jika jumlah pembelian kurang dari 10
+                                                    if (quantity < 10) {
+                                                        custom_tag_price.value = quantity * 1000;
+                                                    }
                                                     additional = additional + parseInt(custom_tag_price.value);
                                                     custom_tag_price.disabled = false;
                                                     custom_tag_input.disabled = false;
@@ -208,14 +226,11 @@
                                                     localStorage.removeItem('custom_tag');
                                                     custom_tag_input.value = '';
                                                 }
-
                                                 let cost = parseFloat($(this).find('option:selected').data('price')) || 0;
                                                 let subtotal = parseFloat($('.order_subtotal').data('price'));
                                                 let coupon = parseFloat($('.coupon_price').data('price')) || 0;
                                                 // alert(coupon);
                                                 $('#order_total_price span').text(rupiahFormat(subtotal + cost - coupon + additional));
-
-
                                             }
                                         </script>
 
@@ -269,17 +284,49 @@
                                             Cart Subtotal
                                             <span>{{ Helper::rupiahFormatter(Helper::totalCartPrice(), 2) }}</span>
                                         </li>
-
                                         <li id="custom_name_cart_container" style="display:none">
                                             Kustom Nama
-                                            <span>Rp 25.000</span>
+                                            <span id="custom_name_price_display">Rp. 25.000</span>
                                         </li>
-
                                         <li id="custom_tag_cart_container" style="display:none">
                                             Kustom Tag
-                                            <span>Rp 15.000</span>
+                                            <span id="custom_tag_price_display">Rp. 15.000</span>
                                         </li>
-
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                var custom_name_price = localStorage.getItem('custom_name_price');
+                                                var custom_tag_price = localStorage.getItem('custom_tag_price');
+                                                var quantity = parseInt(localStorage.getItem('quantity'));
+                                                // Ubah harga kustom nama
+                                                if (custom_name_price !== null && custom_name_price !== undefined) {
+                                                    if (quantity >= 50) {
+                                                        custom_name_price = 23000; // Harga jika lebih dari atau sama dengan 50
+                                                    } else if (quantity < 10) {
+                                                        custom_name_price = quantity * 1500; // Harga per produk jika kurang dari 10
+                                                    } else {
+                                                        custom_name_price = 25000; // Harga jika antara 10 dan kurang dari 50
+                                                    }
+                                                    // Update elemen span dengan harga kustom nama yang baru
+                                                    document.getElementById("custom_name_price_display").textContent = 'Rp. ' + custom_name_price.toLocaleString('id-ID');
+                                                } else {
+                                                    console.error('Nilai custom_name_price tidak ditemukan atau tidak valid.');
+                                                }
+                                                // Ubah harga kustom tag
+                                                if (custom_tag_price !== null && custom_tag_price !== undefined) {
+                                                    if (quantity >= 50) {
+                                                        custom_tag_price = 13000; // Harga jika lebih dari atau sama dengan 50
+                                                    } else if (quantity < 10) {
+                                                        custom_tag_price = quantity * 1000; // Harga per produk jika kurang dari 10
+                                                    } else {
+                                                        custom_tag_price = 15000; // Harga jika antara 10 dan kurang dari 50
+                                                    }
+                                                    // Update elemen span dengan harga kustom tag yang baru
+                                                    document.getElementById('custom_tag_price_display').textContent = 'Rp. ' + custom_tag_price;
+                                                } else {
+                                                    console.error('Nilai custom_tag_price tidak ditemukan atau tidak valid.');
+                                                }
+                                            });
+                                        </script>
                                         @if (session()->has('coupon'))
                                             <li class="coupon_price" data-price="{{ Session::get('coupon')['value'] }}">
                                                 You
@@ -460,6 +507,8 @@
                 minimumFractionDigits: 0
             }).format(rupiah);
         }
+        
+
     </script>
 
     @if (auth()->check() && auth()->user()->role == 'agent')

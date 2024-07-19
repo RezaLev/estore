@@ -15,7 +15,7 @@
            Phone :{{$message->phone}}
         </div>
         <hr/>
-  <h5 class="text-center" style="text-decoration:underline"><strong>Subject :</strong> {{$message->subject}}</h5>
+        <h5 class="text-center" style="text-decoration:underline"><strong>Subject :</strong> {{$message->subject}}</h5>
         <p class="py-5">{{$message->message}}</p>
 
     @endif
