@@ -112,6 +112,7 @@ class OrderController extends Controller
         //             $total_prod+=$cart_items['quantity'];
         //         }
         // }
+        
 
         $order = new Order();
         $order_data = $request->all();
@@ -130,24 +131,24 @@ class OrderController extends Controller
         $order_data['custom_tag'] = $request->custom_tag;
         $order_data['custom_tag_price'] = $request->custom_tag_price;
 
-
-
-
+        $customPrice = ($order_data['has_custom_name'] ? $order_data['custom_name_price'] : 0) +
+                        ($order_data['has_custom_tag'] ? $order_data['custom_tag_price'] : 0);
 
         if (session('coupon')) {
             $order_data['coupon'] = session('coupon')['value'];
         }
+
         if ($request->shipping) {
             if (session('coupon')) {
-                $order_data['total_amount'] = Helper::totalCartPrice() + $shipping - session('coupon')['value'];
+                $order_data['total_amount'] = Helper::totalCartPrice() + $customPrice + $shipping - session('coupon')['value'];
             } else {
-                $order_data['total_amount'] = Helper::totalCartPrice() + $shipping;
+                $order_data['total_amount'] = Helper::totalCartPrice() + $customPrice + $shipping;
             }
         } else {
             if (session('coupon')) {
-                $order_data['total_amount'] = Helper::totalCartPrice() - session('coupon')['value'];
+                $order_data['total_amount'] = Helper::totalCartPrice() + $customPrice - session('coupon')['value'];
             } else {
-                $order_data['total_amount'] = Helper::totalCartPrice();
+                $order_data['total_amount'] = Helper::totalCartPrice() + $customPrice;
             }
         }
         // return $order_data['total_amount'];
@@ -217,8 +218,6 @@ class OrderController extends Controller
                 'approved_status' => 0
             ]);
         }
-
-
         // dd($users);        
         request()->session()->flash('success', 'Your product successfully placed in order');
         request()->session()->flash('snap_token_status', true);

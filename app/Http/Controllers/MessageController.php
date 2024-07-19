@@ -125,12 +125,6 @@ class MessageController extends Controller
         }
         return back();
     }
-    public function markAsRead(Request $request)
-    {
-        // Logika untuk menandai semua pesan sebagai dibaca
-        Message::where('is_read', false)->update(['is_read' => true]);
-
-        return response()->json(['success' => 'Messages marked as read']);
-    }
+    
 
 }

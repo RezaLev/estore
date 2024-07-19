@@ -117,14 +117,13 @@
                                         </li>
                                         <li id="custom_name_cart_container" style="display:none">
                                             Kustom Nama
-                                            <span>Rp 25.000</span>
+                                            <span id="custom_name_price_display">Rp. 25.000</span>
                                         </li>
 
                                         <li id="custom_tag_cart_container" style="display:none">
                                             Kustom Tag
-                                            <span>Rp 15.000</span>
+                                            <span id="custom_tag_price_display">Rp. 15.000</span>
                                         </li>
-
                                         <div class="d-none justify-content-between my-2">
                                             <div class="d-flex m-0">
                                                 <input type="checkbox" name="has_custom_name" id="has_custom_name"
@@ -151,7 +150,6 @@
                                                 class="form-control ml-2 w-75" disabled
                                                 oninput="localStorage.setItem('custom_tag', this.value)">
                                         </div>
-
                                         <script>
                                             rupiahFormat = (rupiah) => {
                                                 return new Intl.NumberFormat("id-ID", {
@@ -160,7 +158,6 @@
                                                     minimumFractionDigits: 0
                                                 }).format(rupiah);
                                             }
-
                                             document.addEventListener('DOMContentLoaded', function() {
                                                 var has_custom_name = localStorage.getItem('has_custom_name');
                                                 var custom_name_price = localStorage.getItem('custom_name_price');
@@ -176,7 +173,6 @@
                                                     document.getElementById('custom_name_price').disabled = false;
                                                     additional = additional + parseInt(custom_name_price);
                                                 }
-
                                                 var has_custom_tag = localStorage.getItem('has_custom_tag');
                                                 var custom_tag_price = localStorage.getItem('custom_tag_price');
                                                 var custom_tag = localStorage.getItem('custom_tag');
@@ -315,14 +311,7 @@
                 <div class="row">
                     <div class="col-lg-8 offset-lg-2 col-12">
                         <!-- Start Newsletter Inner -->
-                        <div class="inner">
-                            <h4>Newsletter</h4>
-                            <p> Subscribe to our newsletter and get <span>10%</span> off your first purchase</p>
-                            <form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
-                                <input name="EMAIL" placeholder="Your email address" required="" type="email">
-                                <button class="btn">Subscribe</button>
-                            </form>
-                        </div>
+                        
                         <!-- End Newsletter Inner -->
                     </div>
                 </div>
@@ -455,7 +444,7 @@
                         id: code
                     },
                     success: function(response) {
-                        $('[name="shipping"]').html('<option value="">Select your address</option>')
+                        $('[name="shipping"]').html('<option value="">Select your shipping </option>')
                         if (response.success) {
                             response.data.map((data) => {
                                 $('[name="shipping"]').append(
